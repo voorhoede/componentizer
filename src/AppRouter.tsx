@@ -2,13 +2,13 @@ import * as React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
 import Index from './pages/Index'
-import About from './pages/About'
+import Edit from './pages/Edit'
 
 const AppRouter = () => (
   <Router>
     <React.Fragment>
       <Route path="/" exact component={Index} />
-      <Route path="/about/" component={About} />
+      <Route path="/edit/" component={Edit} />
     </React.Fragment>
   </Router>
 );
