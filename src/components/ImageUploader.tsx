@@ -2,9 +2,9 @@ import * as React from 'react';
 const { FilePond } = require('react-filepond');
 import { withRouter } from 'react-router-dom'
 import { RouteComponentProps } from "react-router";
-import styled from '../../styled-components'
+import styled from '../styled-components'
 import 'filepond/dist/filepond.min.css';
-import createCloudinary from '../../lib/createCloudinary'
+import createCloudinary from '../lib/createCloudinary'
 
 interface FilePondFileInterface {
   file: File

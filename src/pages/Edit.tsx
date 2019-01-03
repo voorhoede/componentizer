@@ -1,5 +1,11 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter} from 'react-router-dom'
+import styled from '../styled-components'
+import ImageEditor from "../components/ImageEditor";
+
+const StyledEditor = styled.main`
+  height: 100%;
+`;
 
 const Edit: React.SFC<RouteComponentProps> = ({ location, history }) => {
   if (!location.state || !location.state.imgUrl) {
@@ -8,9 +14,9 @@ const Edit: React.SFC<RouteComponentProps> = ({ location, history }) => {
   }
 
   return (
-    <div>
-      <img src={location.state.imgUrl} alt="screenshot"/>
-    </div>
+    <StyledEditor>
+      <ImageEditor imgUrl={location.state.imgUrl}/>
+    </StyledEditor>
   )
 };
 
