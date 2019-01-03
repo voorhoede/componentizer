@@ -1,4 +1,6 @@
 export default interface ThemeInterface {
-  primaryColor: string;
-  primaryColorInverted: string;
+  themeColor: string
+  borderRadiusDefault: string
+  borderRadiusLarge: string
+  borderColor: string
 }

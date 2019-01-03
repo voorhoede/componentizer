@@ -1,8 +1,28 @@
 import * as React from 'react'
+const ReactRegionSelect = require('react-region-select');
 import styled from '../styled-components'
+import Modal from "./Modal";
+import ComponentForm from "./ComponentForm";
+import {number} from "prop-types";
 
 interface ImageEditorProps {
   imgUrl: string
+}
+
+interface RegionData {
+  index: number
+  name?: string
+  description?: string
+}
+
+interface Region {
+  data: RegionData
+  height: number
+  isChanging: boolean
+  new: boolean
+  width: number
+  x: number
+  y: number
 }
 
 const StyledImageEditor = styled.div`
@@ -13,16 +33,75 @@ const StyledImageEditor = styled.div`
   align-items: center;
   
   img {
-    max-width: 100%;
-    max-height: 100%;
+    max-height: 100vh;
+    max-width: 100vw;
   }
 `;
 
+const StyledNameLabel = styled.p`
+  background-color: #fff;
+  padding: 0.25rem;
+`;
+
+const RegionOptions: React.SFC<{data: RegionData, isChanging: boolean}> = ({ data, isChanging }) => (
+  <div>
+    {!isChanging && data.name && <StyledNameLabel>{data.name}</StyledNameLabel>}
+  </div>
+);
+
 const ImageEditor: React.SFC<ImageEditorProps> = ({ imgUrl }) => {
+  const [regions, updateRegions] = React.useState([].map((item: Region) => item));
+  const [modalState, updateModalState] = React.useState({
+    show: false,
+    index: 0
+  });
+
   return (
-    <StyledImageEditor>
-      <img src={imgUrl} alt=""/>
-    </StyledImageEditor>
+    <>
+      <Modal show={modalState.show}>
+        <ComponentForm
+          regionIndex={modalState.index}
+          onSubmit={(regionIndex: number, name: string, description?: string) => {
+            updateRegions(regions.map((region: Region) => {
+              if (region.data.index === regionIndex) {
+                region.data.name = name;
+              }
+              return region
+            }));
+
+            updateModalState({ index: 0, show: false })
+          }}
+          onCancel={(regionIndex: number) => {
+            updateRegions(regions.filter(region => region.data.index !== regionIndex));
+            updateModalState({ index: 0, show: false })
+          }}
+        />
+      </Modal>
+      <StyledImageEditor>
+        <ReactRegionSelect
+          regions={regions}
+          onChange={(regions: []) => {
+            updateRegions(prevRegions => {
+              prevRegions.forEach((prevRegion: Region) => {
+                const updatedRegion: Region | undefined = regions.find((region: Region)=> region.data.index === prevRegion.data.index);
+
+                if (prevRegion.new !== updatedRegion!.new) {
+                  updateModalState({
+                    show: true,
+                    index: prevRegion.data.index
+                  })
+                }
+              });
+
+              return regions
+            })
+          }}
+          regionRenderer={RegionOptions}
+        >
+          <img src={imgUrl} alt=""/>
+        </ReactRegionSelect>
+      </StyledImageEditor>
+    </>
   )
 };
 

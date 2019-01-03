@@ -8,9 +8,18 @@ const StyledEditor = styled.main`
 `;
 
 const Edit: React.SFC<RouteComponentProps> = ({ location, history }) => {
+  location = {
+    pathname: '',
+    search: '',
+    hash: '',
+    state: {
+      imgUrl: 'https://res.cloudinary.com/dkmhierrx/image/upload/v1546522157/componetizer/dcrxqmyz4sao8a5fwcif.png'
+    }
+  };
+
   if (!location.state || !location.state.imgUrl) {
     history.push('/');
-    return <></>
+    return null
   }
 
   return (

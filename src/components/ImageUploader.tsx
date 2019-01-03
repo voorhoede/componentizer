@@ -6,13 +6,15 @@ import styled from '../styled-components'
 import 'filepond/dist/filepond.min.css';
 import createCloudinary from '../lib/createCloudinary'
 
-interface FilePondFileInterface {
-  file: File
-}
-
 const StyledImageUploader = styled.div`
   width: 100%;
   max-width: 20rem;
+  border-radius: ${props => props.theme.borderRadiusLarge};
+  overflow: hidden;
+  
+  .filepond--root {
+    margin-bottom: 0;
+  }
 `;
 
 const ImageUploader: React.SFC<RouteComponentProps> = ({ history }) => {
