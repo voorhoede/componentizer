@@ -1,11 +1,13 @@
 import * as React from 'react'
 import styled from '../styled-components'
+import { Ref } from "react";
 
 interface InputProps {
   label: string
   id: string
   name: string
   onChange: Function
+  ref: React.RefObject<HTMLInputElement>
   [propName: string]: {}
 }
 
@@ -26,16 +28,19 @@ const InputGroup = styled.div`
   }
 `;
 
-const InputField: React.SFC<InputProps> = ({ label, id, name, onChange, ...rest }) => (
-  <InputGroup>
+const InputField = React.forwardRef((props: InputProps, ref) => {
+  const { label, id, name, onChange, ...rest } = props;
+
+  return <InputGroup>
     <label htmlFor={id}>{label}</label>
     <input
       id={id}
       name={name}
       onChange={e => onChange(e)}
+      ref={ref}
       {...rest}
     />
   </InputGroup>
-);
+});
 
 export default InputField

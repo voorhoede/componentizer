@@ -20,6 +20,7 @@ const StyledForm = styled.form`
 `;
 
 const Modal: React.SFC<ModalProps> = ({ onSubmit, regionIndex, onCancel }) => {
+  let nameInputRef = React.useRef<HTMLInputElement>(null);
   const [state, updateState] = React.useState({
     name: '',
     regionIndex
@@ -30,6 +31,11 @@ const Modal: React.SFC<ModalProps> = ({ onSubmit, regionIndex, onCancel }) => {
     const { name, value } = e.currentTarget;
     updateState(prevState => ({ ...prevState, [name]: value}))
   };
+
+
+  React.useEffect(() => {
+    nameInputRef.current && nameInputRef.current.focus()
+  });
 
   return (
     <StyledForm
@@ -44,8 +50,11 @@ const Modal: React.SFC<ModalProps> = ({ onSubmit, regionIndex, onCancel }) => {
         name="name"
         onChange={onInput}
         autoComplete="off"
+        ref={nameInputRef}
       />
-      <footer>
+      <footer
+        onClick={() => console.log(nameInputRef)}
+      >
         <Button
           type="button"
           onClick={() => onCancel(regionIndex)}
