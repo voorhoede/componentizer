@@ -8,8 +8,8 @@ const AppRouter = () => (
   <React.Suspense fallback={null}>
     <Router>
       <React.Fragment>
-        <Route path="/" exact component={Index} />
-        <Route path="/edit/" component={Edit} />
+        <Route path="/" exact component={() => <Index />} />
+        <Route path="/edit/" component={() => <Edit />} />
       </React.Fragment>
     </Router>
   </React.Suspense>
