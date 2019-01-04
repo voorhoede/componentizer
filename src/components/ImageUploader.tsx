@@ -1,10 +1,10 @@
 import * as React from 'react';
-const { FilePond } = require('react-filepond');
 import { withRouter } from 'react-router-dom'
 import { RouteComponentProps } from "react-router";
+import FilePond from './FilePond';
 import styled from '../styled-components'
-import 'filepond/dist/filepond.min.css';
 import createCloudinary from '../lib/createCloudinary'
+import 'filepond/dist/filepond.min.css';
 
 export interface CloudinaryImage {
   public_id: string
@@ -15,13 +15,20 @@ export interface CloudinaryImage {
 
 const StyledImageUploader = styled.div`
   width: 100%;
-  max-width: 20rem;
+  max-width: 25rem;
+  min-height: 4.75rem;
   border-radius: ${props => props.theme.borderRadiusLarge};
   overflow: hidden;
+  background: #f1f0ef;
   
   .filepond--root {
     margin-bottom: 0;
   }
+`;
+
+const PlaceHolder = styled.div`
+  width: 100%;
+  height: 4.75rem;
 `;
 
 const ImageUploader: React.SFC<RouteComponentProps> = ({ history }) => {
@@ -31,10 +38,12 @@ const ImageUploader: React.SFC<RouteComponentProps> = ({ history }) => {
 
   return (
     <StyledImageUploader>
-      <FilePond
-        allowMultiple={false}
-        server={createCloudinary(process.env.REACT_APP_CLOUDINARY_CLOUD!, process.env.REACT_APP_CLOUDINARY_PRESET!, onSuccess)}
-      />
+      <React.Suspense fallback={<PlaceHolder />}>
+        <FilePond
+          allowMultiple={false}
+          server={createCloudinary(process.env.REACT_APP_CLOUDINARY_CLOUD!, process.env.REACT_APP_CLOUDINARY_PRESET!, onSuccess)}
+        />
+      </React.Suspense>
     </StyledImageUploader>
   )
 };

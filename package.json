@@ -17,6 +17,7 @@
     "react": "^16.7.0-alpha.2",
     "react-dom": "^16.7.0-alpha.2",
     "react-filepond": "^5.0.0",
+    "react-pose": "^4.0.4",
     "react-region-select": "^2.3.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "2.1.2",
