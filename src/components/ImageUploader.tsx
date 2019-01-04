@@ -33,7 +33,7 @@ const ImageUploader: React.SFC<RouteComponentProps> = ({ history }) => {
     <StyledImageUploader>
       <FilePond
         allowMultiple={false}
-        server={createCloudinary('dkmhierrx', 'componetizer', onSuccess)}
+        server={createCloudinary(process.env.REACT_APP_CLOUDINARY_CLOUD!, process.env.REACT_APP_CLOUDINARY_PRESET!, onSuccess)}
       />
     </StyledImageUploader>
   )

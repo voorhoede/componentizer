@@ -41,7 +41,7 @@ const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
               const xInPx = Math.round((region.x + region.width * 0.5) * (width / 100));
               const yInPx = Math.round((region.y + region.height * 0.5) * (height / 100));
 
-              const croppedImage = `https://res.cloudinary.com/dkmhierrx/w_${widthInPx},h_${heightInPx},c_crop,g_xy_center,x_${xInPx},y_${yInPx},f_auto/${public_id}`
+              const croppedImage = `https://res.cloudinary.com/${process.env.REACT_APP_CLOUDINARY_CLOUD!}/w_${widthInPx},h_${heightInPx},c_crop,g_xy_center,x_${xInPx},y_${yInPx},f_auto/${public_id}`
 
               return {
                 name: region.data.name || '',
