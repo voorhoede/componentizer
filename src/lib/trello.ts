@@ -47,11 +47,10 @@ class Trello {
   async addCards(boardId: string, cards: Card[]) {
     await this.authorize()
     const listQuery = queryString.stringify({ token: this.token, key: this.key })
-    const lists = await fetch(`${this.baseUrl}/boards/${boardId}/lists?${listQuery}`)
-      .then(res => res.json())
+    const lists = await fetch(`${this.baseUrl}/boards/${boardId}/lists?${listQuery}`).then(res => res.json())
     const list = lists[0]
 
-    Promise.all(cards.map(async card => {
+    const createdCards =await Promise.all(cards.map(async card => {
       const cardQuery = queryString.stringify({
         token: this.token,
         key: this.key,
@@ -61,20 +60,20 @@ class Trello {
 
       const url = `${this.baseUrl}/cards?${cardQuery}`  
 
-      const res = await fetch(url, { method: 'POST' })
-        .then(res => res.json())
-        .then(res => {
-          const attachmentQuery = queryString.stringify({
-            token: this.token,
-            key: this.key,
-            url: card.attachments[0].url
-          })
-          const attachmentUrl = `${this.baseUrl}/cards/${res.id}/attachments?${attachmentQuery}`
-          fetch(attachmentUrl, { method: 'POST', body: JSON.stringify(card.attachments[0]) }).then(res => res.json())
-            .then(res => console.log(res))
-        })
+      const { id }: { id: string } = await fetch(url, { method: 'POST' }).then(res => res.json())
+    
+      const attachmentQuery = queryString.stringify({
+        token: this.token,
+        key: this.key,
+        url: card.attachments[0].url
+      })
 
+      const attachmentUrl = `${this.baseUrl}/cards/${id}/attachments?${attachmentQuery}`
+
+      fetch(attachmentUrl, { method: 'POST', body: JSON.stringify(card.attachments[0]) }).then(res => res.json())
     }))
+
+    return createdCards;
   }
 }
 

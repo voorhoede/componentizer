@@ -39,10 +39,15 @@ const Board = styled(Button)<BoardProps>`
   background: ${props => props.background};
   font-size: 1rem;
   color: ${props => props.backgroundBrightness === 'dark' ? '#fff' : '#000'};
+
+  .icon {
+    margin-left: 0.5rem;
+  }
 `
 
 const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect, onBoardsLoaded }) => {
   const [boards, setBoards] = React.useState<Board[]>([]);
+  const [loadingBoard, setLoadingBoard] = React.useState<string | null>(null);
   
   React.useEffect(() => {
     trello.getBoards()
@@ -53,7 +58,7 @@ const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect, onBoardsLoaded })
   }, [])
 
   return (
-    boards.length ? (
+    true || boards.length ? (
       <StyledBoardList>
         {
           boards.map(board => (
@@ -61,13 +66,17 @@ const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect, onBoardsLoaded })
               <Board
                 background={board.prefs.backgroundBottomColor}
                 backgroundBrightness={board.prefs.backgroundBrightness}
-                onClick={() => onBoardSelect(board.id)}
-              >{board.name}</Board>
+                onClick={async () => {
+                  setLoadingBoard(board.id)
+                  await onBoardSelect(board.id)
+                  setLoadingBoard(null)
+                }}
+              >{board.name}{loadingBoard === board.id && <span className="icon">⏳</span>}</Board>
             </li>
           ))
         }
       </StyledBoardList>
-    ) : <p>Loading ⌛️</p>
+    ) : <p>Loading <span>⌛️</span></p>
   )
 };
 

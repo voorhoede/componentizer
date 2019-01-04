@@ -44,9 +44,7 @@ const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
       <Modal show={modalOpen}>
         <Warning>🚧 Beware! When exporting your components, they can not be edited later on. When exporting once more there will be duplicates.</Warning>
         <BoardList
-          onBoardSelect={(boardId: string) => {
-            setModalOpen(false);
-
+          onBoardSelect={async (boardId: string) => {
             const { width, height, public_id } = imgData;
 
             const cards = regions.map(region => {
@@ -63,7 +61,9 @@ const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
               }
             })
 
-            trello.addCards(boardId, cards)
+            await trello.addCards(boardId, cards);
+
+            setModalOpen(false);
           }}
           onBoardsLoaded={() => setBoardsLoaded(true)}
         />
