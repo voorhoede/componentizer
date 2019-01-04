@@ -3,13 +3,15 @@ import styled from '../styled-components'
 import InputField from "./InputField";
 import Button from '../components/styled-components/Button'
 
-interface ModalProps {
+interface ComponentFormProps {
   onSubmit: Function
   onCancel: Function
   regionIndex: number
 }
 
 const StyledForm = styled.form`
+  min-width: 20rem;
+
   footer {
     float: right;
     
@@ -19,7 +21,7 @@ const StyledForm = styled.form`
   }
 `;
 
-const Modal: React.SFC<ModalProps> = ({ onSubmit, regionIndex, onCancel }) => {
+const ComponentForm: React.SFC<ComponentFormProps> = ({ onSubmit, regionIndex, onCancel }) => {
   let nameInputRef = React.useRef<HTMLInputElement>(null);
   const [state, updateState] = React.useState({
     name: '',
@@ -52,9 +54,7 @@ const Modal: React.SFC<ModalProps> = ({ onSubmit, regionIndex, onCancel }) => {
         autoComplete="off"
         ref={nameInputRef}
       />
-      <footer
-        onClick={() => console.log(nameInputRef)}
-      >
+      <footer>
         <Button
           type="button"
           onClick={() => onCancel(regionIndex)}
@@ -67,4 +67,4 @@ const Modal: React.SFC<ModalProps> = ({ onSubmit, regionIndex, onCancel }) => {
   )
 };
 
-export default Modal
+export default ComponentForm

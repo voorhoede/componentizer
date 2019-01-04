@@ -10,6 +10,8 @@ const StyledModal = styled.div`
   position: fixed;
   width: 100%;
   height: 100%;
+  top: 0;
+  left: 0;
   background: rgba(0, 0, 0, 0.5);
   padding: 1rem;
   z-index: 100;
@@ -19,8 +21,6 @@ const StyledModal = styled.div`
 `;
 
 const StyledDialog = styled.dialog`
-  width: 100%;
-  max-width: 40rem;
   position: static;
   border: none;
   padding: 1.5rem;
