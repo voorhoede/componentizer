@@ -7,6 +7,9 @@ export default styled.button`
   border-radius: ${props => props.theme.borderRadiusDefault};
   background-color: ${props => props.theme.themeColor};
   color: #fff;
+  cursor: pointer;
+  line-height: 1rem;
+  
   ${props => props.disabled && css`
       opacity: 0.5;
   `}

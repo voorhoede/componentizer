@@ -3,7 +3,7 @@ const ReactRegionSelect = require('react-region-select');
 import styled from '../styled-components'
 import Modal from "./Modal";
 import ComponentForm from "./ComponentForm";
-import {number} from "prop-types";
+import ExportButton from './ExportButton'
 
 interface ImageEditorProps {
   imgUrl: string
@@ -51,10 +51,7 @@ const RegionOptions: React.SFC<{data: RegionData, isChanging: boolean}> = ({ dat
 
 const ImageEditor: React.SFC<ImageEditorProps> = ({ imgUrl }) => {
   const [regions, updateRegions] = React.useState([].map((item: Region) => item));
-  const [modalState, updateModalState] = React.useState({
-    show: false,
-    index: 0
-  });
+  const [modalState, updateModalState] = React.useState({ show: false, index: 0 });
 
   return (
     <>
@@ -77,6 +74,7 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgUrl }) => {
           }}
         />
       </Modal>
+
       <StyledImageEditor>
         <ReactRegionSelect
           regions={regions}
@@ -101,6 +99,8 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgUrl }) => {
           <img src={imgUrl} alt=""/>
         </ReactRegionSelect>
       </StyledImageEditor>
+
+      <ExportButton regions={regions}/>
     </>
   )
 };
