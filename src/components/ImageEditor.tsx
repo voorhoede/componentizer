@@ -32,6 +32,7 @@ const StyledImageEditor = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: crosshair;
   
   img {
     max-height: 100vh;
@@ -44,10 +45,15 @@ const StyledNameLabel = styled.p`
   padding: 0.25rem;
 `;
 
+const StyledRegionOptions = styled.p`
+  cursor: default;
+  pointer-events: none;
+`;
+
 const RegionOptions: React.SFC<{data: RegionData, isChanging: boolean}> = ({ data, isChanging }) => (
-  <div>
+  <StyledRegionOptions>
     {!isChanging && data.name && <StyledNameLabel>{data.name}</StyledNameLabel>}
-  </div>
+  </StyledRegionOptions>
 );
 
 const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
