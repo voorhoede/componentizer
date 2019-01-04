@@ -1,6 +1,7 @@
 import * as React from 'react'
 import styled from '../styled-components'
 import Button from './styled-components/Button'
+import ModalFooter from './styled-components/ModalFooter'
 import Modal from './Modal';
 import BoardList from './BoardList'
 
@@ -19,19 +20,25 @@ const ExportButton: React.SFC<ExportButtonProps> = ({ regions }) => {
 
   return (
     <>
-      { String(modalOpen) }
       <Modal show={modalOpen}>
         <BoardList
           onBoardSelect={(id: string) => {
             setModalOpen(false)
-            console.log(id)
+
+
           }}
         />
+
+        <ModalFooter>
+          <Button
+            onClick={() => setModalOpen(false)}
+          >Cancel</Button>
+        </ModalFooter>
       </Modal>
       <StyledExportButton
         onClick={() => setModalOpen(true)}
       >
-        Export to Trello 🚀
+        Export{modalOpen && 'ing'} to Trello 🚀
       </StyledExportButton>
     </>
   )

@@ -27,6 +27,7 @@ interface Board {
 
 const StyledBoardList = styled.ul`
   list-style: none;
+  margin-bottom: 1rem;
 
   li:not(:last-of-type) {
     margin-bottom: 1rem;
@@ -48,19 +49,21 @@ const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect }) => {
   }, [])
 
   return (
-    <StyledBoardList>
-      {boards && (
-        boards.map(board => (
-          <li key={board.id}>
-            <Board
-              background={board.prefs.backgroundBottomColor}
-              backgroundBrightness={board.prefs.backgroundBrightness}
-              onClick={() => onBoardSelect(board.id)}
-            >{board.name}</Board>
-          </li>
-        ))
-      )}
-    </StyledBoardList>
+    boards.length ? (
+      <StyledBoardList>
+        {
+          boards.map(board => (
+            <li key={board.id}>
+              <Board
+                background={board.prefs.backgroundBottomColor}
+                backgroundBrightness={board.prefs.backgroundBrightness}
+                onClick={() => onBoardSelect(board.id)}
+              >{board.name}</Board>
+            </li>
+          ))
+        }
+      </StyledBoardList>
+    ) : <p>Loading ⌛️</p>
   )
 };
 

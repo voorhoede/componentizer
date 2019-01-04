@@ -2,6 +2,7 @@ import * as React from 'react';
 import styled from '../styled-components'
 import InputField from "./InputField";
 import Button from '../components/styled-components/Button'
+import ModalFooter from './styled-components/ModalFooter';
 
 interface ComponentFormProps {
   onSubmit: Function
@@ -11,14 +12,6 @@ interface ComponentFormProps {
 
 const StyledForm = styled.form`
   min-width: 20rem;
-
-  footer {
-    float: right;
-    
-    button {
-    margin-left: 1rem;
-    }
-  }
 `;
 
 const ComponentForm: React.SFC<ComponentFormProps> = ({ onSubmit, regionIndex, onCancel }) => {
@@ -54,7 +47,7 @@ const ComponentForm: React.SFC<ComponentFormProps> = ({ onSubmit, regionIndex, o
         autoComplete="off"
         ref={nameInputRef}
       />
-      <footer>
+      <ModalFooter>
         <Button
           type="button"
           onClick={() => onCancel(regionIndex)}
@@ -62,7 +55,7 @@ const ComponentForm: React.SFC<ComponentFormProps> = ({ onSubmit, regionIndex, o
         <Button
           disabled={Boolean(!state.name)}
         >Save</Button>
-      </footer>
+      </ModalFooter>
     </StyledForm>
   )
 };
