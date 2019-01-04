@@ -4,9 +4,10 @@ import styled from '../styled-components'
 import Modal from "./Modal";
 import ComponentForm from "./ComponentForm";
 import ExportButton from './ExportButton'
+import { CloudinaryImage } from './ImageUploader'
 
 interface ImageEditorProps {
-  imgUrl: string
+  imgData: CloudinaryImage
 }
 
 interface RegionData {
@@ -15,12 +16,12 @@ interface RegionData {
   description?: string
 }
 
-interface Region {
+export interface Region {
   data: RegionData
-  height: number
   isChanging: boolean
   new: boolean
   width: number
+  height: number
   x: number
   y: number
 }
@@ -49,7 +50,7 @@ const RegionOptions: React.SFC<{data: RegionData, isChanging: boolean}> = ({ dat
   </div>
 );
 
-const ImageEditor: React.SFC<ImageEditorProps> = ({ imgUrl }) => {
+const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
   const [regions, updateRegions] = React.useState([].map((item: Region) => item));
   const [modalState, updateModalState] = React.useState({ show: false, index: 0 });
 
@@ -96,11 +97,11 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgUrl }) => {
           }}
           regionRenderer={RegionOptions}
         >
-          <img src={imgUrl} alt=""/>
+          <img src={imgData.secure_url} alt=""/>
         </ReactRegionSelect>
       </StyledImageEditor>
 
-      <ExportButton regions={regions}/>
+      <ExportButton regions={regions} imgData={imgData} />
     </>
   )
 };

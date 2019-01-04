@@ -23,7 +23,7 @@ function createCloudinary (cloudName: string, unsignedUploadPreset: string, onSu
 
         if (xhr.status >= 200 && xhr.status < 300) {
           const response = JSON.parse(xhr.responseText);
-          onSuccess(response.secure_url);
+          onSuccess(response);
           load(response.secure_url);
           return;
         }

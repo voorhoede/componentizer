@@ -6,6 +6,13 @@ import styled from '../styled-components'
 import 'filepond/dist/filepond.min.css';
 import createCloudinary from '../lib/createCloudinary'
 
+export interface CloudinaryImage {
+  public_id: string
+  secure_url: string
+  width: number
+  height: number
+}
+
 const StyledImageUploader = styled.div`
   width: 100%;
   max-width: 20rem;
@@ -18,20 +25,15 @@ const StyledImageUploader = styled.div`
 `;
 
 const ImageUploader: React.SFC<RouteComponentProps> = ({ history }) => {
-  const [imgUrl, setImgUrl] = React.useState(null);
-
-  React.useEffect(() => {
-    if (imgUrl) {
-      history.push('/edit', { imgUrl })
-    }
-  });
+  function onSuccess(imgData: CloudinaryImage) {
+    history.push('/edit', { imgData })
+  }
 
   return (
     <StyledImageUploader>
-      { imgUrl }
       <FilePond
         allowMultiple={false}
-        server={createCloudinary('dkmhierrx', 'componetizer', setImgUrl)}
+        server={createCloudinary('dkmhierrx', 'componetizer', onSuccess)}
       />
     </StyledImageUploader>
   )

@@ -1,7 +1,18 @@
 import authWindow from './authWindow'
+import queryString from 'query-string'
 
 interface Trello {
   authUrl: string
+}
+
+interface Attachment {
+  url: string
+}
+
+export interface Card {
+  name: string
+  desc?: string
+  attachments: Attachment[]
 }
 
 class Trello {
@@ -27,9 +38,43 @@ class Trello {
 
   async getBoards() {
     await this.authorize()
-    const url = `${this.baseUrl}/member/me/boards?token=${this.token}&key=${this.key}`
-    const res = await fetch(url)
-    return res.json()
+    const query = queryString.stringify({ token: this.token, key: this.key })
+    const res = await fetch(`${this.baseUrl}/member/me/boards?${query}`)
+      .then(res => res.json())
+    return res
+  }
+
+  async addCards(boardId: string, cards: Card[]) {
+    await this.authorize()
+    const listQuery = queryString.stringify({ token: this.token, key: this.key })
+    const lists = await fetch(`${this.baseUrl}/boards/${boardId}/lists?${listQuery}`)
+      .then(res => res.json())
+    const list = lists[0]
+
+    Promise.all(cards.map(async card => {
+      const cardQuery = queryString.stringify({
+        token: this.token,
+        key: this.key,
+        idList: list.id,
+        name: card.name
+      })
+
+      const url = `${this.baseUrl}/cards?${cardQuery}`  
+
+      const res = await fetch(url, { method: 'POST' })
+        .then(res => res.json())
+        .then(res => {
+          const attachmentQuery = queryString.stringify({
+            token: this.token,
+            key: this.key,
+            url: card.attachments[0].url
+          })
+          const attachmentUrl = `${this.baseUrl}/cards/${res.id}/attachments?${attachmentQuery}`
+          fetch(attachmentUrl, { method: 'POST', body: JSON.stringify(card.attachments[0]) }).then(res => res.json())
+            .then(res => console.log(res))
+        })
+
+    }))
   }
 }
 
