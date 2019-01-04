@@ -13,4 +13,8 @@ export default styled.button`
   ${props => props.disabled && css`
       opacity: 0.5;
   `}
+
+  .icon {
+    margin-left: 0.25rem;
+  }
 `

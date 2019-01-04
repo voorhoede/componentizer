@@ -7,6 +7,7 @@ type Brightness = 'dark' | 'light'
 
 interface BoardListProps {
   onBoardSelect: Function
+  onBoardsLoaded: Function
 }
 
 interface BoardPrefs {
@@ -40,12 +41,15 @@ const Board = styled(Button)<BoardProps>`
   color: ${props => props.backgroundBrightness === 'dark' ? '#fff' : '#000'};
 `
 
-const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect }) => {
+const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect, onBoardsLoaded }) => {
   const [boards, setBoards] = React.useState<Board[]>([]);
   
   React.useEffect(() => {
     trello.getBoards()
-      .then(boards => setBoards(boards))
+      .then(boards => {
+        setBoards(boards)
+        onBoardsLoaded()
+      })
   }, [])
 
   return (

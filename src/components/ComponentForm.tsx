@@ -11,7 +11,7 @@ interface ComponentFormProps {
 }
 
 const StyledForm = styled.form`
-  min-width: 20rem;
+  width: 100%;
 `;
 
 const ComponentForm: React.SFC<ComponentFormProps> = ({ onSubmit, regionIndex, onCancel }) => {
@@ -54,7 +54,7 @@ const ComponentForm: React.SFC<ComponentFormProps> = ({ onSubmit, regionIndex, o
         >Cancel</Button>
         <Button
           disabled={Boolean(!state.name)}
-        >Save</Button>
+        >Save <span className="icon">💾</span></Button>
       </ModalFooter>
     </StyledForm>
   )

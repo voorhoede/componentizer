@@ -21,6 +21,8 @@ const StyledModal = styled.div`
 `;
 
 const StyledDialog = styled.dialog`
+  width: 100%;
+  max-width: 30rem;
   position: static;
   border: none;
   padding: 1.5rem;

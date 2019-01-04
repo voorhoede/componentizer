@@ -19,16 +19,30 @@ const StyledExportButton = styled(Button)`
   right: 1rem;
 `;
 
+const Warning = styled.p`
+  display: block;
+  margin-bottom: 1.5rem;
+`
+
 const getPercentage = (value: number) => {
   return value / 100
 }
 
 const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
   const [modalOpen, setModalOpen] = React.useState(false)
+  const [boardsLoaded, setBoardsLoaded] = React.useState(false)
 
   return (
     <>
+      <StyledExportButton
+        onClick={() => {
+          setModalOpen(true)
+        }}
+      >
+        Export{modalOpen && 'ing'} to Trello  <span className="icon">🚀</span>
+      </StyledExportButton>
       <Modal show={modalOpen}>
+        <Warning>🚧 Beware! When exporting your components, they can not be edited later on. When exporting once more there will be duplicates.</Warning>
         <BoardList
           onBoardSelect={(boardId: string) => {
             setModalOpen(false);
@@ -51,20 +65,16 @@ const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
 
             trello.addCards(boardId, cards)
           }}
+          onBoardsLoaded={() => setBoardsLoaded(true)}
         />
-        <ModalFooter>
-          <Button
-            onClick={() => setModalOpen(false)}
-          >Cancel</Button>
-        </ModalFooter>
+        {boardsLoaded && (
+          <ModalFooter>
+            <Button
+              onClick={() => setModalOpen(false)}
+            >Cancel</Button>
+          </ModalFooter>
+        )}
       </Modal>
-      <StyledExportButton
-        onClick={() => {
-          setModalOpen(true)
-        }}
-      >
-        Export{modalOpen && 'ing'} to Trello 🚀
-      </StyledExportButton>
     </>
   )
 };
