@@ -30,7 +30,6 @@ const getPercentage = (value: number) => {
 
 const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
   const [modalOpen, setModalOpen] = React.useState(false)
-  const [boardsLoaded, setBoardsLoaded] = React.useState(false)
 
   return (
     <>
@@ -65,15 +64,12 @@ const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
 
             setModalOpen(false);
           }}
-          onBoardsLoaded={() => setBoardsLoaded(true)}
         />
-        {boardsLoaded && (
-          <ModalFooter>
-            <Button
-              onClick={() => setModalOpen(false)}
-            >Cancel</Button>
-          </ModalFooter>
-        )}
+        <ModalFooter>
+          <Button
+            onClick={() => setModalOpen(false)}
+          >Cancel</Button>
+        </ModalFooter>
       </Modal>
     </>
   )
