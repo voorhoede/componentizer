@@ -25,9 +25,9 @@ function authWindow (url: string): Promise<string> {
   const authWindow = window.open(extendedUrl, 'producthuntPopup', windowOpts);
 
   const authPromise = new Promise<string>((resolve, reject) => {
-    window.addEventListener('message', (e: any) => {
-      if ((<any>e).data) {
-        resolve((<any>e).data);
+    window.addEventListener('message', e => {
+      if (e.data) {
+        resolve(e.data);
 
         if (authWindow) {
           authWindow.close();
