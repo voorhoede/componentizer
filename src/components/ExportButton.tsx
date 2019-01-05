@@ -21,7 +21,11 @@ const StyledExportButton = styled(Button)`
 
 const Warning = styled.p`
   display: block;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
+
+  &:last-of-type {
+    margin-bottom: 1.5rem;
+  }
 `
 
 const getPercentage = (value: number) => {
@@ -42,6 +46,7 @@ const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
       </StyledExportButton>
       <Modal show={modalOpen}>
         <Warning>🚧 Beware! When exporting your components, they can not be edited later on. When exporting once more there will be duplicates.</Warning>
+        <Warning>ℹ️ The cards will be added to the first list of the board.</Warning>
         <BoardList
           onBoardSelect={async (boardId: string) => {
             const { width, height, public_id } = imgData;
