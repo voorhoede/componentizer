@@ -10,8 +10,8 @@ interface Attachment {
 }
 
 export interface Card {
-  name: string
-  desc?: string
+  name?: string
+  description?: string
   attachments: Attachment[]
 }
 
@@ -55,7 +55,8 @@ class Trello {
         token: this.token,
         key: this.key,
         idList: list.id,
-        name: card.name
+        name: card.name,
+        desc: card.description
       })
 
       const url = `${this.baseUrl}/cards?${cardQuery}`  

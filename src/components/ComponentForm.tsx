@@ -3,6 +3,7 @@ import styled from '../styled-components'
 import InputField from "./InputField";
 import Button from '../components/styled-components/Button'
 import ModalFooter from './styled-components/ModalFooter';
+import TextArea from './TextArea';
 
 interface ComponentFormProps {
   onSubmit: Function
@@ -18,25 +19,29 @@ const ComponentForm: React.SFC<ComponentFormProps> = ({ onSubmit, regionIndex, o
   let nameInputRef = React.useRef<HTMLInputElement>(null);
   const [state, updateState] = React.useState({
     name: '',
-    regionIndex
+    description: '',
+    index: regionIndex
   });
 
   const onInput = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.currentTarget;
+
+    console.log(name)
+
     updateState(prevState => ({ ...prevState, [name]: value}))
   };
 
 
   React.useEffect(() => {
     nameInputRef.current && nameInputRef.current.focus()
-  });
+  }, []);
 
   return (
     <StyledForm
       onSubmit={e => {
         e.preventDefault();
-        onSubmit(state.regionIndex, state.name);
+        onSubmit({ ...state });
       }}
     >
       <InputField
@@ -46,6 +51,12 @@ const ComponentForm: React.SFC<ComponentFormProps> = ({ onSubmit, regionIndex, o
         onChange={onInput}
         autoComplete="off"
         ref={nameInputRef}
+      />
+      <TextArea
+        label="Description"
+        id="description"
+        name="description"
+        onChange={onInput}
       />
       <ModalFooter>
         <Button

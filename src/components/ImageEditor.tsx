@@ -66,10 +66,10 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
       <Modal show={modalState.show}>
         <ComponentForm
           regionIndex={modalState.index}
-          onSubmit={(regionIndex: number, name: string, description?: string) => {
+          onSubmit={(regionData: RegionData) => {
             updateRegions(regions.map((region: Region) => {
-              if (region.data.index === regionIndex) {
-                region.data.name = name;
+              if (region.data.index === regionData.index) {
+                region.data = regionData
               }
               return region
             }));

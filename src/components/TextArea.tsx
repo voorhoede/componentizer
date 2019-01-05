@@ -2,12 +2,11 @@ import * as React from 'react'
 import styled from '../styled-components'
 import { Ref } from "react";
 
-interface InputProps {
+interface TextAreaProps {
   label: string
   id: string
   name: string
   onChange: Function
-  ref: React.RefObject<HTMLInputElement>
   [propName: string]: {}
 }
 
@@ -20,7 +19,8 @@ const InputGroup = styled.div`
     margin-bottom: 0.5rem;
   }
   
-  input {
+  textarea {
+    height: 7.5rem;
     padding: 0.5rem;
     font-size: 1rem;
     border-radius: ${props => props.theme.borderRadiusDefault};
@@ -28,21 +28,20 @@ const InputGroup = styled.div`
   }
 `;
 
-const InputField = React.forwardRef((props: InputProps, ref) => {
+const TextArea: React.SFC<TextAreaProps> = (props: TextAreaProps) => {
   const { label, id, name, onChange, ...rest } = props;
 
   return (    
     <InputGroup>
       <label htmlFor={id}>{label}</label>
-      <input
+      <textarea
         id={id}
         name={name}
         onChange={e => onChange(e)}
-        ref={ref}
         {...rest}
       />
     </InputGroup>
   )
-});
+};
 
-export default InputField
+export default TextArea
