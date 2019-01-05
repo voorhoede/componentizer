@@ -37,6 +37,7 @@ const StyledImageEditor = styled.div`
   img {
     max-height: 100vh;
     max-width: 100vw;
+    background-color: blue;
   }
 `;
 
