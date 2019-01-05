@@ -1,10 +1,10 @@
 import * as React from 'react';
 const { unstable_createResource } = require('react-cache')
 import styled from '../styled-components';
-import trello from '../lib/trello';
+import { getBoards } from '../lib/trello';
 import Button from '../components/styled-components/Button'
 
-const boardsResource = unstable_createResource(trello.getBoards)
+const boardsResource = unstable_createResource(getBoards)
 
 type Brightness = 'dark' | 'light'
 
@@ -48,12 +48,7 @@ const Board = styled(Button)<BoardProps>`
 `
 
 const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect }) => {
-  // const [boards, setBoards] = React.useState<Board[]>([]);
   const [loadingBoard, setLoadingBoard] = React.useState<string | null>(null);
-  
-  React.useEffect(() => {
-    trello.authorize()
-  }, [])
 
   const boards = boardsResource.read()
 
@@ -65,6 +60,7 @@ const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect }) => {
             <Board
               background={board.prefs.backgroundBottomColor}
               backgroundBrightness={board.prefs.backgroundBrightness}
+              disabled={Boolean(loadingBoard)}
               onClick={async () => {
                 setLoadingBoard(board.id)
                 await onBoardSelect(board.id)

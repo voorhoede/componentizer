@@ -5,7 +5,7 @@ import ModalFooter from './styled-components/ModalFooter'
 import Modal from './Modal';
 import BoardList from './BoardList'
 import { Region } from './ImageEditor'
-import trello, { Card } from '../lib/trello';
+import { addCards } from '../lib/trello';
 import { CloudinaryImage } from './ImageUploader';
 
 interface ExportButtonProps {
@@ -52,7 +52,7 @@ const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
       }
     })
 
-    await trello.addCards(boardId, cards);
+    await addCards(boardId, cards);
 
     setModalOpen(false);
   }

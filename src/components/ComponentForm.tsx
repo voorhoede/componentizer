@@ -26,9 +26,6 @@ const ComponentForm: React.SFC<ComponentFormProps> = ({ onSubmit, regionIndex, o
   const onInput = (e: React.FormEvent<HTMLInputElement>) => {
     e.preventDefault();
     const { name, value } = e.currentTarget;
-
-    console.log(name)
-
     updateState(prevState => ({ ...prevState, [name]: value}))
   };
 
