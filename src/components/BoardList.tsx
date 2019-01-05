@@ -58,7 +58,7 @@ const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect, onBoardsLoaded })
   }, [])
 
   return (
-    true || boards.length ? (
+    boards.length ? (
       <StyledBoardList>
         {
           boards.map(board => (
