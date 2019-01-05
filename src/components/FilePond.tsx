@@ -1,5 +1,10 @@
 import * as React from 'react';
-const { FilePond } = require('react-filepond');
+const { FilePond, registerPlugin } = require('react-filepond');
+const  FilePondPluginImagePreview = require('filepond-plugin-image-preview');
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css';
+import 'filepond/dist/filepond.min.css';
+
+registerPlugin(FilePondPluginImagePreview);
 
 const FilePondWrapper: React.SFC<any> = ({...props}) => (
   <FilePond {...props} />

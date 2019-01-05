@@ -4,7 +4,6 @@ import { RouteComponentProps } from "react-router";
 import FilePond from './FilePond';
 import styled from '../styled-components'
 import createCloudinary from '../lib/createCloudinary'
-import 'filepond/dist/filepond.min.css';
 
 export interface CloudinaryImage {
   public_id: string
