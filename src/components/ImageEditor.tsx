@@ -40,14 +40,14 @@ const StyledImageEditor = styled.div`
   }
 `;
 
+const StyledRegionOptions = styled.div`
+  cursor: default;
+  pointer-events: none;
+`;
+
 const StyledNameLabel = styled.p`
   background-color: #fff;
   padding: 0.25rem;
-`;
-
-const StyledRegionOptions = styled.p`
-  cursor: default;
-  pointer-events: none;
 `;
 
 const RegionOptions: React.SFC<{data: RegionData, isChanging: boolean}> = ({ data, isChanging }) => (
