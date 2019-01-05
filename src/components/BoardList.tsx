@@ -62,7 +62,11 @@ const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect }) => {
               <Board
                 background={board.prefs.backgroundBottomColor}
                 backgroundBrightness={board.prefs.backgroundBrightness}
-                onClick={() => onBoardSelect(board.id)}
+                onClick={async () => {
+                  setLoadingBoard(board.id)
+                  await onBoardSelect(board.id)
+                  setLoadingBoard(null)
+                }}
               >{board.name}{loadingBoard === board.id && <span className="icon">⏳</span>}</Board>
             </li>
           ))
