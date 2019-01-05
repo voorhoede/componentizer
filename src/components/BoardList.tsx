@@ -1,7 +1,10 @@
 import * as React from 'react';
+const { unstable_createResource } = require('react-cache')
 import styled from '../styled-components';
 import trello from '../lib/trello';
 import Button from '../components/styled-components/Button'
+
+const boardsResource = unstable_createResource(trello.getBoards)
 
 type Brightness = 'dark' | 'light'
 
@@ -45,34 +48,33 @@ const Board = styled(Button)<BoardProps>`
 `
 
 const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect }) => {
-  const [boards, setBoards] = React.useState<Board[]>([]);
+  // const [boards, setBoards] = React.useState<Board[]>([]);
   const [loadingBoard, setLoadingBoard] = React.useState<string | null>(null);
   
   React.useEffect(() => {
-    trello.getBoards()
-      .then(boards => setBoards(boards))
+    trello.authorize()
   }, [])
 
+  const boards = boardsResource.read()
+
   return (
-    boards.length ? (
-      <StyledBoardList>
-        {
-          boards.map(board => (
-            <li key={board.id}>
-              <Board
-                background={board.prefs.backgroundBottomColor}
-                backgroundBrightness={board.prefs.backgroundBrightness}
-                onClick={async () => {
-                  setLoadingBoard(board.id)
-                  await onBoardSelect(board.id)
-                  setLoadingBoard(null)
-                }}
-              >{board.name}{loadingBoard === board.id && <span className="icon">⏳</span>}</Board>
-            </li>
-          ))
-        }
-      </StyledBoardList>
-    ) : <p>Loading <span>⌛️</span></p>
+    <StyledBoardList>
+      {
+        boards.map((board: Board) => (
+          <li key={board.id}>
+            <Board
+              background={board.prefs.backgroundBottomColor}
+              backgroundBrightness={board.prefs.backgroundBrightness}
+              onClick={async () => {
+                setLoadingBoard(board.id)
+                await onBoardSelect(board.id)
+                setLoadingBoard(null)
+              }}
+            >{board.name}{loadingBoard === board.id && <span className="icon">⏳</span>}</Board>
+          </li>
+        ))
+      }
+    </StyledBoardList>
   )
 };
 

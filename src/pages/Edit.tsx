@@ -1,10 +1,17 @@
 import * as React from 'react'
-import { RouteComponentProps, withRouter} from 'react-router-dom'
+import { RouteComponentProps, withRouter, Link } from 'react-router-dom'
 import styled from '../styled-components'
 import ImageEditor from "../components/ImageEditor";
+import Button from '../components/styled-components/Button';
 
-const StyledEditor = styled.main`
+const StyledEditor = styled.div`
   height: 100%;
+`;
+
+const  BackButton = styled(Button)`
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
 `;
 
 const Edit: React.SFC<RouteComponentProps> = ({ location, history }) => {
@@ -15,6 +22,7 @@ const Edit: React.SFC<RouteComponentProps> = ({ location, history }) => {
 
   return (
     <StyledEditor>
+      <Link to=""><BackButton>👈</BackButton></Link>
       <ImageEditor imgData={location.state.imgData}/>
     </StyledEditor>
   )
