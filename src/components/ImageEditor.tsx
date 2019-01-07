@@ -77,7 +77,7 @@ const RegionOptions: React.SFC<RegionOptionsProps> = ({ data, isChanging, onEdit
     {!isChanging && data.name && (
       <>
         <NameLabel>{data.name}</NameLabel>
-        <Actions>
+        <Actions key={data.index}>
           <Action onClick={() => onDeleteClick(data.index)}>🗑</Action>
           <Action onClick={() => onEditClick(data.index)}>✏️</Action>
         </Actions>
