@@ -40,7 +40,23 @@ export async function addCards (boardId: string, cards: Card[]) {
   const lists = await fetch(`${baseUrl}/boards/${boardId}/lists?${listQuery}`).then(res => res.json())
   const list = lists[0]
 
-  return Promise.all(cards.map(async card => {
+  // merge cards with the same name
+  const mergedCards = cards.reduce((acc: Card[], card) => {
+    const existingCard: Card | undefined = acc.find((c: Card) => c.name === card.name)
+
+    if (existingCard) {
+      if (card.description) {
+        existingCard.description = existingCard.description + ' \n\n---\n\n ' + card.description
+      }
+      existingCard.attachments.push(...card.attachments)
+    } else {
+      acc.push(card)
+    }
+
+    return acc
+  }, []);
+
+  return Promise.all(mergedCards.map(async card => {
     const cardQuery = queryString.stringify({
       token,
       key,
@@ -52,15 +68,17 @@ export async function addCards (boardId: string, cards: Card[]) {
     const url = `${baseUrl}/cards?${cardQuery}`  
 
     const { id }: { id: string } = await fetch(url, { method: 'POST' }).then(res => res.json())
+
+    return Promise.all(card.attachments.map(attachment => {
+      const attachmentQuery = queryString.stringify({
+        token,
+        key,
+        url: attachment.url
+      })
   
-    const attachmentQuery = queryString.stringify({
-      token,
-      key,
-      url: card.attachments[0].url
-    })
+      const attachmentUrl = `${baseUrl}/cards/${id}/attachments?${attachmentQuery}`
 
-    const attachmentUrl = `${baseUrl}/cards/${id}/attachments?${attachmentQuery}`
-
-    return fetch(attachmentUrl, { method: 'POST', body: JSON.stringify(card.attachments[0]) }).then(res => res.json())
+      return fetch(attachmentUrl, { method: 'POST' }).then(res => res.json())
+    }))
   }))
 }
