@@ -36,9 +36,23 @@ export async function getBoards () {
 export async function addCards (boardId: string, cards: Card[]) {
   authorize()
   const token = localStorage.getItem('trello_token');
-  const listQuery = queryString.stringify({ token, key })
-  const lists = await fetch(`${baseUrl}/boards/${boardId}/lists?${listQuery}`).then(res => res.json())
-  const list = lists[0]
+  const listsQuery = queryString.stringify({ token, key })
+  const lists = await fetch(`${baseUrl}/boards/${boardId}/lists?${listsQuery}`).then(res => res.json())
+
+  let list: { id?: string } = {};
+
+  if (!lists.length) {
+    const listQuery = queryString.stringify({
+      token,
+      key,
+      idBoard: boardId,
+      name: 'To do',
+    })
+
+    list = await fetch(`${baseUrl}/lists/lists?${listQuery}`).then(res => res.json())
+  }
+
+  list = lists[0]
 
   // merge cards with the same name
   const mergedCards = cards.reduce((acc: Card[], card) => {
