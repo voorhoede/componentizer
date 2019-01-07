@@ -9,10 +9,15 @@ export default styled.button`
   color: #fff;
   cursor: pointer;
   line-height: 1rem;
+  transition: transform 0.1s;
   
   ${props => props.disabled && css`
       opacity: 0.5;
   `}
+
+  &:hover:not([disabled]) {
+    transform: scale(1.05);
+  }
 
   .icon {
     margin-left: 0.25rem;
