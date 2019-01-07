@@ -13,12 +13,16 @@ export default styled.h1`
 export const OldSchoolTitle = styled.h1`
   padding: 0 1rem;
   font-family: 'Lazer84';
-  font-size: 5vw;
+  font-size: 10vw;
   margin-bottom: 5rem;
   color: rgba(230,65,247,1);
   background: linear-gradient(356deg, rgba(230,65,247,1) 0%, rgba(148,34,127,1) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   letter-spacing: 0.25vw;
-  transform: rotate(-3deg)
+  transform: rotate(-5deg);
+
+  @media(min-width: 60rem) {
+    font-size: 5vw;
+  }
 `

@@ -37,19 +37,22 @@ const StyledModal = styled(posed.div({
 `;
 
 const StyledDialog = styled.dialog`
+  background-color: #fff;
   width: 100%;
+  max-height: 100%;
   max-width: 30rem;
   position: static;
   border: none;
   padding: 1.5rem;
   border-radius: ${props => props.theme.borderRadiusLarge};
+  overflow-y: auto;
 `;
 
 const Shade = styled(posed.div({
   enter: { opacity: 1 },
   exit: { opacity: 0 }
 }))`
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
