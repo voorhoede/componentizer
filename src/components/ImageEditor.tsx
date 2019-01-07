@@ -26,6 +26,13 @@ export interface Region {
   y: number
 }
 
+interface RegionOptionsProps {
+  data: RegionData
+  isChanging: boolean
+  onEditClick: Function
+  onDeleteClick: Function
+}
+
 const StyledImageEditor = styled.div`
   width: 100%;
   display: flex;
@@ -44,16 +51,38 @@ const StyledRegionOptions = styled.div`
   cursor: default;
   pointer-events: none;
   text-align: left;
-`;
-
-const StyledNameLabel = styled.p`
   background-color: #fff;
-  padding: 0.25rem;
+  display: flex;
 `;
 
-const RegionOptions: React.SFC<{data: RegionData, isChanging: boolean}> = ({ data, isChanging }) => (
+const NameLabel = styled.p`
+  padding: 0.25rem;
+  flex: 1;
+`
+
+const Actions = styled.div`
+  margin-left: auto;
+`
+
+const Action = styled.button`
+  display: inline-block;
+  padding: 0.25rem;
+  pointer-events: all;
+  background-color: transparent;
+  border: none;
+`
+
+const RegionOptions: React.SFC<RegionOptionsProps> = ({ data, isChanging, onEditClick, onDeleteClick }) => (
   <StyledRegionOptions>
-    {!isChanging && data.name && <StyledNameLabel>{data.name}</StyledNameLabel>}
+    {!isChanging && data.name && (
+      <>
+        <NameLabel>{data.name}</NameLabel>
+        <Actions>
+          <Action onClick={() => onDeleteClick(data.index)}>🗑</Action>
+          <Action onClick={() => onEditClick(data.index)}>✏️</Action>
+        </Actions>
+      </>
+    )}
   </StyledRegionOptions>
 );
 
@@ -61,11 +90,24 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
   const [regions, updateRegions] = React.useState([].map((item: Region) => item));
   const [modalState, updateModalState] = React.useState({ show: false, index: 0 });
 
+  const onRegionEdit = (index: number) => {
+    updateModalState({
+      show: true,
+      index
+    })
+  }
+
+  const onRegionDelete = (index: number) => {
+    updateRegions(regions.filter(region => {
+      return region.data.index !== index
+    }))
+  }
+
   return (
     <>
       <Modal show={modalState.show}>
         <ComponentForm
-          regionIndex={modalState.index}
+          region={regions.find((region: Region) => region.data.index === modalState.index)}
           onSubmit={(regionData: RegionData) => {
             updateRegions(regions.map((region: Region) => {
               if (region.data.index === regionData.index) {
@@ -77,7 +119,12 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
             updateModalState({ index: 0, show: false })
           }}
           onCancel={(regionIndex: number) => {
-            updateRegions(regions.filter(region => region.data.index !== regionIndex));
+            const region = regions.find((region: Region) => region.data.index === regionIndex)
+
+            if (region && !region.data.name) {
+              updateRegions(regions.filter(region => region.data.index !== regionIndex));
+            }
+
             updateModalState({ index: 0, show: false })
           }}
         />
@@ -103,7 +150,13 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
               return regions
             })
           }}
-          regionRenderer={RegionOptions}
+          regionRenderer={(props: RegionOptionsProps) => 
+            <RegionOptions
+              onEditClick={onRegionEdit}
+              onDeleteClick={onRegionDelete}
+              {...props}
+            />
+          }
         >
           <img src={imgData.secure_url} alt=""/>
         </ReactRegionSelect>
