@@ -17,3 +17,8 @@ body {
 html, body, #root, .App {
   height: 100%;
 }
+
+@font-face {
+  font-family: Lazer84;
+  src: url(/fonts/Lazer84.woff2);
+}

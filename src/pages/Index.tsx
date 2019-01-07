@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from '../styled-components'
 import Page from '../components/styled-components/Page'
-import Title from '../components/styled-components/Title'
+import Title, { OldSchoolTitle } from '../components/styled-components/Title'
 import ImageUploader from "../components/ImageUploader";
 
 const IndexStyles = styled.main`
@@ -16,7 +16,8 @@ const Index: React.SFC<{}> = () => {
   return (
     <Page>
       <IndexStyles>
-        <Title large>Upload your screenshot 📸</Title>
+        <OldSchoolTitle>Componetizer</OldSchoolTitle>
+        <Title as="h2">Upload your screenshot 📸</Title>
         <ImageUploader/>
       </IndexStyles>
     </Page>
