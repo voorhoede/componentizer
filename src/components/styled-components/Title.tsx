@@ -7,7 +7,7 @@ interface TitleProps {
 
 export default styled.h1`
   font-size: ${(props: TitleProps) => props.large ? '3rem' : '1.5rem'};
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
 `
 
 export const OldSchoolTitle = styled.h1`

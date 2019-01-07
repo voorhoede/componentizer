@@ -14,7 +14,7 @@ interface ExportButtonProps {
 }
 
 const StyledExportButton = styled(Button)`
-  position: absolute;
+  position: fixed;
   top: 1rem;
   right: 1rem;
 `;

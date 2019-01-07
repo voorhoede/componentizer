@@ -28,14 +28,13 @@ export interface Region {
 
 const StyledImageEditor = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
+  text-align: center;
   justify-content: center;
   align-items: center;
 
   img {
-    max-height: 100vh;
-    max-width: 100vw;
+    width: 100%;
     background-color: #f1f0ef;
     cursor: crosshair;
   }
@@ -44,6 +43,7 @@ const StyledImageEditor = styled.div`
 const StyledRegionOptions = styled.div`
   cursor: default;
   pointer-events: none;
+  text-align: left;
 `;
 
 const StyledNameLabel = styled.p`
@@ -85,6 +85,7 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
 
       <StyledImageEditor>
         <ReactRegionSelect
+          style={{ maxWidth: '80%' }}
           regions={regions}
           onChange={(regions: []) => {
             updateRegions(prevRegions => {

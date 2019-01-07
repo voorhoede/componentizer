@@ -9,9 +9,10 @@ const StyledEditor = styled.div`
 `;
 
 const  BackButton = styled(Button)`
-  position: absolute;
+  position: fixed;
   left: 1rem;
   top: 1rem;
+  z-index: 200;
 `;
 
 const Edit: React.SFC<RouteComponentProps> = ({ location, history }) => {
