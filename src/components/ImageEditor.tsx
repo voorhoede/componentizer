@@ -32,12 +32,12 @@ const StyledImageEditor = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: crosshair;
-  
+
   img {
     max-height: 100vh;
     max-width: 100vw;
     background-color: #f1f0ef;
+    cursor: crosshair;
   }
 `;
 
