@@ -19,6 +19,6 @@ export const OldSchoolTitle = styled.h1`
   background: linear-gradient(356deg, rgba(230,65,247,1) 0%, rgba(148,34,127,1) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: 0.25rem;
+  letter-spacing: 0.25vw;
   transform: rotate(-3deg)
 `
