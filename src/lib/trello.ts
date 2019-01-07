@@ -49,10 +49,11 @@ export async function addCards (boardId: string, cards: Card[]) {
       name: 'To do',
     })
 
-    list = await fetch(`${baseUrl}/lists/lists?${listQuery}`).then(res => res.json())
+    list = await fetch(`${baseUrl}/lists?${listQuery}`, { method: 'POST' }).then(res => res.json())
+  } else {
+    list = lists[0]
   }
 
-  list = lists[0]
 
   // merge cards with the same name
   const mergedCards = cards.reduce((acc: Card[], card) => {
@@ -87,7 +88,8 @@ export async function addCards (boardId: string, cards: Card[]) {
       const attachmentQuery = queryString.stringify({
         token,
         key,
-        url: attachment.url
+        url: attachment.url,
+        name: card.name
       })
   
       const attachmentUrl = `${baseUrl}/cards/${id}/attachments?${attachmentQuery}`
