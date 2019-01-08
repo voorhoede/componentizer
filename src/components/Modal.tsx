@@ -63,7 +63,7 @@ const Shade = styled(posed.div({
   z-index: 200;
 `;
 
-const Modal: React.SFC<ModalProps> = ({ show, children }) => (
+const Modal = ({ show, children }: ModalProps) => (
   <PoseGroup>
     {
       show &&  [

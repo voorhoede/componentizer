@@ -30,7 +30,7 @@ const PlaceHolder = styled.div`
   height: 4.75rem;
 `;
 
-const ImageUploader: React.SFC<RouteComponentProps> = ({ history }) => {
+const ImageUploader = ({ history }: RouteComponentProps) => {
   function onSuccess(imgData: CloudinaryImage) {
     history.push('/edit', { imgData })
   }

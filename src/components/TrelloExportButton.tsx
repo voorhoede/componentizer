@@ -26,7 +26,7 @@ const Warning = styled.p`
   }
 `;
 
-const ExportButton: React.SFC<TrelloExportButtonProps> = ({ regions, imgData, ...props }) => {
+const ExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProps) => {
   const [modalOpen, setModalOpen] = React.useState(false)
 
   async function onBoardSelect(boardId: string) {

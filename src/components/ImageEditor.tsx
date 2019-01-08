@@ -83,7 +83,7 @@ const ExportButtons = styled.div`
   }
 `
 
-const RegionOptions: React.SFC<RegionOptionsProps> = ({ data, isChanging, onEditClick, onDeleteClick }) => (
+const RegionOptions = ({ data, isChanging, onEditClick, onDeleteClick }: RegionOptionsProps) => (
   <StyledRegionOptions>
     {!isChanging && data.name && (
       <>
@@ -97,7 +97,7 @@ const RegionOptions: React.SFC<RegionOptionsProps> = ({ data, isChanging, onEdit
   </StyledRegionOptions>
 );
 
-const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
+const ImageEditor = ({ imgData }: ImageEditorProps) => {
   const [regions, updateRegions] = React.useState([].map((item: Region) => item));
   const [modalState, updateModalState] = React.useState({ show: false, index: 0 });
 

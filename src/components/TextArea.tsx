@@ -33,9 +33,7 @@ const InputGroup = styled.div`
   }
 `;
 
-const TextArea: React.SFC<TextAreaProps> = (props: TextAreaProps) => {
-  const { label, id, name, onChange, ...rest } = props;
-
+const TextArea = ({ label, id, name, onChange, ...props }: TextAreaProps) => {
   return (    
     <InputGroup>
       <label htmlFor={id}>{label}</label>
@@ -43,7 +41,7 @@ const TextArea: React.SFC<TextAreaProps> = (props: TextAreaProps) => {
         id={id}
         name={name}
         onChange={e => onChange(e)}
-        {...rest}
+        {...props}
       />
     </InputGroup>
   )

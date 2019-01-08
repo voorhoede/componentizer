@@ -16,8 +16,9 @@ const StyledForm = styled.form`
   width: 100%;
 `;
 
-const ComponentForm: React.SFC<ComponentFormProps> = ({ onSubmit, region, onCancel }) => {
+const ComponentForm= ({ onSubmit, region, onCancel }: ComponentFormProps) => {
   let nameInputRef = React.useRef<HTMLInputElement>(null);
+  
   const [state, updateState] = React.useState({
     name: region && region.data.name || '',
     description: region && region.data.description || '',

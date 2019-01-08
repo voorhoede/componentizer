@@ -47,7 +47,7 @@ const Board = styled(Button)<BoardProps>`
   }
 `
 
-const BoardList: React.SFC<BoardListProps> = ({ onBoardSelect }) => {
+const BoardList = ({ onBoardSelect }: BoardListProps) => {
   const [loadingBoard, setLoadingBoard] = React.useState<string | null>(null);
 
   const boards = boardsResource.read()

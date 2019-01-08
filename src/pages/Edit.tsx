@@ -15,7 +15,7 @@ const  BackButton = styled(Button)`
   z-index: 200;
 `;
 
-const Edit: React.SFC<RouteComponentProps> = ({ location, history }) => {
+const Edit = ({ location, history }: RouteComponentProps) => {
   if (!location.state || !location.state.imgData) {
     history.push('/');
     return null

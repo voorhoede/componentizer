@@ -20,7 +20,7 @@ interface ComponentFiles {
   images: Blob[]
 }
 
-const ExportButton: React.SFC<ImageExportButtonProps> = ({ regions, imgData, ...props}) => {
+const ExportButton = ({ regions, imgData, ...props}: ImageExportButtonProps) => {
   const [loading, setLoading] = React.useState(false)
   
   const exportAsImages = async () => {

@@ -1,4 +1,5 @@
 import styled, { css } from '../../styled-components'
+import { lighten } from 'polished'
 
 export default styled.button`
   padding: 1rem;
@@ -12,7 +13,7 @@ export default styled.button`
   transition: transform 0.1s, opacity 0.3s;
   
   ${props => props.disabled && css`
-      opacity: 0.5;
+      opacity: 0.6;
   `}
 
   &:hover:not([disabled]),

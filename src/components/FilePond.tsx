@@ -6,7 +6,7 @@ import 'filepond/dist/filepond.min.css';
 
 registerPlugin(FilePondPluginImagePreview);
 
-const FilePondWrapper: React.SFC<any> = ({...props}) => (
+const FilePondWrapper = ({...props}) => (
   <FilePond {...props} />
 );
 

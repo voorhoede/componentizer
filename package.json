@@ -18,6 +18,7 @@
     "filepond": "^3.7.3",
     "filepond-plugin-image-preview": "^3.1.6",
     "jszip": "^3.1.5",
+    "polished": "^2.3.1",
     "query-string": "^6.2.0",
     "react": "16.7.0-alpha.2",
     "react-cache": "^2.0.0-alpha.1",

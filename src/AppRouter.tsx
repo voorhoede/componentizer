@@ -7,10 +7,10 @@ const Edit = React.lazy(() => import('./pages/Edit'))
 const AppRouter = () => (
   <React.Suspense fallback={null}>
     <Router>
-      <React.Fragment>
+      <>
         <Route path="/" exact component={() => <Index />} />
         <Route path="/edit/" component={() => <Edit />} />
-      </React.Fragment>
+      </>
     </Router>
   </React.Suspense>
 );

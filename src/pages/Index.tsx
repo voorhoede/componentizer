@@ -12,16 +12,14 @@ const IndexStyles = styled.main`
   min-height: 100%;
 `;
 
-const Index: React.SFC<{}> = () => {
-  return (
-    <Page>
-      <IndexStyles>
-        <OldSchoolTitle>Componentizer</OldSchoolTitle>
-        <Title as="h2">Upload your screenshot 📸</Title>
-        <ImageUploader/>
-      </IndexStyles>
-    </Page>
-  )
-};
+const Index = () => (
+  <Page>
+    <IndexStyles>
+      <OldSchoolTitle>Componentizer</OldSchoolTitle>
+      <Title as="h2">Upload your screenshot 📸</Title>
+      <ImageUploader/>
+    </IndexStyles>
+  </Page>
+)
 
 export default Index

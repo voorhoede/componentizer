@@ -11,16 +11,12 @@ const theme = {
   borderColor: '#d1ccc0'
 };
 
-class App extends Component {
-  render() {
-    return (
-      <ThemeProvider theme={theme}>
-        <div className="App">
-          <AppRouter/>
-        </div>
-      </ThemeProvider>
-    );
-  }
-}
+const App = () => (
+  <ThemeProvider theme={theme}>
+    <div className="App">
+      <AppRouter/>
+    </div>
+  </ThemeProvider>
+)
 
 export default App;
