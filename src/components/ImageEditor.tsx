@@ -3,8 +3,8 @@ const ReactRegionSelect = require('react-region-select');
 import styled from '../styled-components'
 import Modal from "./Modal";
 import ComponentForm from "./ComponentForm";
-import TrelloExportButton from './TrelloExportButton'
-import ImageExportButton from './ImageExportButton'
+const TrelloExportButton = React.lazy(() => import('./TrelloExportButton'))
+const ImageExportButton = React.lazy(() => import('./ImageExportButton'))
 import { CloudinaryImage } from './ImageUploader'
 
 interface ImageEditorProps {
@@ -174,8 +174,12 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
       </StyledImageEditor>
 
       <ExportButtons>
-        <ImageExportButton regions={regions} imgData={imgData} />
-        <TrelloExportButton regions={regions} imgData={imgData} />
+        <React.Suspense fallback={null}>
+          <ImageExportButton regions={regions} imgData={imgData} />
+        </React.Suspense>
+        <React.Suspense fallback={null}>
+          <TrelloExportButton regions={regions} imgData={imgData} />
+        </React.Suspense>
       </ExportButtons>
     </>
   )
