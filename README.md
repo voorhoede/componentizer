@@ -1,4 +1,4 @@
-🚧 This project can be unstable. Some experimental React features (like hooks) are used as an experiment. It's likely their API will change in the future.
+🚧  Some experimental React features (like hooks) are used in this project as an experiment. It's likely their API will change in the future.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
