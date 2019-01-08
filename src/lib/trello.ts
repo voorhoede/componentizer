@@ -27,7 +27,7 @@ async function authorize () {
 }
 
 export async function getBoards () {
-  authorize()
+  await authorize()
   const token = localStorage.getItem('trello_token');
   const query = queryString.stringify({ token, key: process.env.REACT_APP_TRELLO_KEY });
     return fetch(`${baseUrl}/member/me/boards?${query}`)
@@ -35,7 +35,7 @@ export async function getBoards () {
 }
 
 export async function addCards (boardId: string, cards: RegionComponent[]) {
-  authorize()
+  await authorize()
   const token = localStorage.getItem('trello_token');
   const listsQuery = queryString.stringify({ token, key })
   const lists = await fetch(`${baseUrl}/boards/${boardId}/lists?${listsQuery}`).then(res => res.json())

@@ -11,6 +11,7 @@ import mergeComponents from '../lib/mergeComponents'
 interface ImageExportButtonProps {
   regions: Region[]
   imgData: CloudinaryImage
+  disabled: boolean
   [propName: string]: {}
 }
 
@@ -20,9 +21,13 @@ interface ComponentFiles {
 }
 
 const ExportButton: React.SFC<ImageExportButtonProps> = ({ regions, imgData, ...props}) => {
+  const [loading, setLoading] = React.useState(false)
+  
   const exportAsImages = async () => {
     const zip = new JSZip()
     const folder = zip.folder('components')
+
+    setLoading(true)
 
     // generate blobs for region image files
     const components = await Promise.all(
@@ -53,13 +58,16 @@ const ExportButton: React.SFC<ImageExportButtonProps> = ({ regions, imgData, ...
     zip.generateAsync({ type: "blob" })
         .then(blob => saveAs(blob, 'components.zip'))
         .catch(e => console.log(e));
+    
+    setLoading(false)
   }
 
   return (
     <Button
       onClick={exportAsImages}
       {...props}
-    >Export as images <span className="icon">🖼</span></Button>
+      disabled={props.disabled || loading}
+    >Export as images <span className="icon">{ loading ? '⏳' : '🖼'}</span></Button>
   )
 }
 
