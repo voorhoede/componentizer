@@ -14,6 +14,7 @@ import generateComponentImageUrl from '../lib/generateComponentImageUrl';
 interface TrelloExportButtonProps {
   regions: Region[]
   imgData: CloudinaryImage
+  [propName: string]: {}
 }
 
 const Warning = styled.p`
@@ -25,7 +26,7 @@ const Warning = styled.p`
   }
 `;
 
-const ExportButton: React.SFC<TrelloExportButtonProps> = ({ regions, imgData }) => {
+const ExportButton: React.SFC<TrelloExportButtonProps> = ({ regions, imgData, ...props }) => {
   const [modalOpen, setModalOpen] = React.useState(false)
 
   async function onBoardSelect(boardId: string) {
@@ -40,6 +41,7 @@ const ExportButton: React.SFC<TrelloExportButtonProps> = ({ regions, imgData }) 
     <>
       <Button
         onClick={() => setModalOpen(true)}
+        {...props}
       >
         Export{modalOpen && 'ing'} to Trello  <span className="icon">🚀</span>
       </Button>
@@ -56,9 +58,7 @@ const ExportButton: React.SFC<TrelloExportButtonProps> = ({ regions, imgData }) 
         </ErrorBoundary>
 
         <ModalFooter>
-          <Button
-            onClick={() => setModalOpen(false)}
-          >Cancel</Button>
+          <Button onClick={() => setModalOpen(false)}>Cancel</Button>
         </ModalFooter>
       </Modal>
     </>

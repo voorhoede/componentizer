@@ -11,6 +11,7 @@ import mergeComponents from '../lib/mergeComponents'
 interface ImageExportButtonProps {
   regions: Region[]
   imgData: CloudinaryImage
+  [propName: string]: {}
 }
 
 interface ComponentFiles {
@@ -18,7 +19,7 @@ interface ComponentFiles {
   images: Blob[]
 }
 
-const ExportButton: React.SFC<ImageExportButtonProps> = ({ regions, imgData }) => {
+const ExportButton: React.SFC<ImageExportButtonProps> = ({ regions, imgData, ...props}) => {
   const exportAsImages = async () => {
     const zip = new JSZip()
     const folder = zip.folder('components')
@@ -55,7 +56,10 @@ const ExportButton: React.SFC<ImageExportButtonProps> = ({ regions, imgData }) =
   }
 
   return (
-    <Button onClick={exportAsImages}>Export as images 🖼</Button>
+    <Button
+      onClick={exportAsImages}
+      {...props}
+    >Export as images <span className="icon">🖼</span></Button>
   )
 }
 

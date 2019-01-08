@@ -175,10 +175,10 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
 
       <ExportButtons>
         <React.Suspense fallback={null}>
-          <ImageExportButton regions={regions} imgData={imgData} />
+          <ImageExportButton disabled={!regions.length} regions={regions} imgData={imgData} />
         </React.Suspense>
         <React.Suspense fallback={null}>
-          <TrelloExportButton regions={regions} imgData={imgData} />
+          <TrelloExportButton disabled={!regions.length} regions={regions} imgData={imgData} />
         </React.Suspense>
       </ExportButtons>
     </>
