@@ -67,7 +67,7 @@ const ExportButton = ({ regions, imgData, ...props}: ImageExportButtonProps) => 
       onClick={exportAsImages}
       {...props}
       disabled={props.disabled || loading}
-    >Export as images <span className="icon">{ loading ? '⏳' : '🖼'}</span></Button>
+    >Export{ loading && 'ing' } as images <span className="icon">{ loading ? '⏳' : '🖼'}</span></Button>
   )
 }
 
