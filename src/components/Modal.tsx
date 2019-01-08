@@ -34,7 +34,6 @@ const StyledModal = styled(posed.div({
   justify-content: center;
   align-items: center;
   z-index: 201;
-  overflow: hidden;
 `;
 
 const StyledDialog = styled.dialog`
@@ -60,14 +59,13 @@ const Shade = styled(posed.div({
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 200;
-  overflow: hidden;
 `;
 
 const Modal: React.SFC<ModalProps> = ({ show, children }) => (
   <PoseGroup>
     {
       show &&  [
-        <Shade key="shade"/>,
+        <Shade style={{ position: 'fixed' }} key="shade"/>,
         <StyledModal key="modal">
           <StyledDialog open>
             {children}

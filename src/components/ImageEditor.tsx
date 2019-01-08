@@ -4,6 +4,7 @@ import styled from '../styled-components'
 import Modal from "./Modal";
 import ComponentForm from "./ComponentForm";
 import TrelloExportButton from './TrelloExportButton'
+import ImageExportButton from './ImageExportButton'
 import { CloudinaryImage } from './ImageUploader'
 
 interface ImageEditorProps {
@@ -70,6 +71,16 @@ const Action = styled.button`
   pointer-events: all;
   background-color: transparent;
   border: none;
+`
+
+const ExportButtons = styled.div`
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+
+  > button {
+    margin-left: 1rem;
+  }
 `
 
 const RegionOptions: React.SFC<RegionOptionsProps> = ({ data, isChanging, onEditClick, onDeleteClick }) => (
@@ -162,7 +173,10 @@ const ImageEditor: React.SFC<ImageEditorProps> = ({ imgData }) => {
         </ReactRegionSelect>
       </StyledImageEditor>
 
-      <TrelloExportButton regions={regions} imgData={imgData} />
+      <ExportButtons>
+        <ImageExportButton regions={regions} imgData={imgData} />
+        <TrelloExportButton regions={regions} imgData={imgData} />
+      </ExportButtons>
     </>
   )
 };

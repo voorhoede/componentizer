@@ -1,5 +1,6 @@
 import authWindow from './authWindow'
 import queryString from 'query-string'
+import mergeComponents from './mergeComponents'
 
 const baseUrl = 'https://trello.com/1';
 const key = process.env.REACT_APP_TRELLO_KEY;
@@ -8,7 +9,7 @@ interface Attachment {
   url: string
 }
 
-export interface Card {
+export interface RegionComponent {
   name?: string
   description?: string
   attachments: Attachment[]
@@ -33,7 +34,7 @@ export async function getBoards () {
       .then(res => res.json())
 }
 
-export async function addCards (boardId: string, cards: Card[]) {
+export async function addCards (boardId: string, cards: RegionComponent[]) {
   authorize()
   const token = localStorage.getItem('trello_token');
   const listsQuery = queryString.stringify({ token, key })
@@ -54,22 +55,8 @@ export async function addCards (boardId: string, cards: Card[]) {
     list = lists[0]
   }
 
-
   // merge cards with the same name
-  const mergedCards = cards.reduce((acc: Card[], card) => {
-    const existingCard: Card | undefined = acc.find((c: Card) => c.name === card.name)
-
-    if (existingCard) {
-      if (card.description) {
-        existingCard.description = existingCard.description + ' \n\n---\n\n ' + card.description
-      }
-      existingCard.attachments.push(...card.attachments)
-    } else {
-      acc.push(card)
-    }
-
-    return acc
-  }, []);
+  const mergedCards = mergeComponents(cards);
 
   return Promise.all(mergedCards.map(async card => {
     const cardQuery = queryString.stringify({
