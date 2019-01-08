@@ -23,7 +23,8 @@ const StyledModal = styled(posed.div({
     transition: { duration: 100 }
   }
 }))`
-  position: fixed;
+  position: fixed !important;
+  // important to write over the transition wich puts it on 'absolute' 
   width: 100%;
   height: 100%;
   top: 0;
@@ -52,7 +53,8 @@ const Shade = styled(posed.div({
   enter: { opacity: 1 },
   exit: { opacity: 0 }
 }))`
-  position: fixed;
+  position: fixed !important;
+  // important to write over the transition wich puts it on 'absolute' 
   width: 100%;
   height: 100%;
   top: 0;
