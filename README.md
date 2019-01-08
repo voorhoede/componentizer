@@ -1,3 +1,5 @@
+🚧 This project can be unstable. Some experimental React features (like hooks) are used as an experiment, so it's possible their API will change in the future.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
