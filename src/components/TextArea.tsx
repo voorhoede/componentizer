@@ -24,7 +24,12 @@ const InputGroup = styled.div`
     padding: 0.5rem;
     font-size: 1rem;
     border-radius: ${props => props.theme.borderRadiusDefault};
-    border: 1px solid ${props => props.theme.borderColor};
+    border: 2px solid ${props => props.theme.borderColor};
+
+    &:focus {
+      outline: none;
+      border-color: ${props => props.theme.themeColor};
+    }
   }
 `;
 

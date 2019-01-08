@@ -9,13 +9,15 @@ export default styled.button`
   color: #fff;
   cursor: pointer;
   line-height: 1rem;
-  transition: transform 0.1s;
+  transition: transform 0.1s, opacity 0.3s;
   
   ${props => props.disabled && css`
       opacity: 0.5;
   `}
 
-  &:hover:not([disabled]) {
+  &:hover:not([disabled]),
+  &:focus {
+    outline: none;
     transform: scale(1.05);
   }
 
