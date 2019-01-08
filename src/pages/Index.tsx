@@ -16,7 +16,7 @@ const Index: React.SFC<{}> = () => {
   return (
     <Page>
       <IndexStyles>
-        <OldSchoolTitle>Componetizer</OldSchoolTitle>
+        <OldSchoolTitle>Componentizer</OldSchoolTitle>
         <Title as="h2">Upload your screenshot 📸</Title>
         <ImageUploader/>
       </IndexStyles>
