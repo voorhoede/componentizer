@@ -5,6 +5,7 @@ import { ThemeProvider } from './styled-components'
 
 const theme = {
   themeColor: '#5f27cd',
+  errorColor: '#c23616',
   borderRadiusDefault: '0.5rem',
   borderRadiusLarge: '1rem',
   borderColor: '#d1ccc0'

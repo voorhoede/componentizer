@@ -1,10 +1,12 @@
-import * as React from 'react'
-import styled from '../styled-components'
-import Button from './styled-components/Button'
-import ModalFooter from './styled-components/ModalFooter'
+import * as React from 'react';
+import styled from '../styled-components';
+import Button from './styled-components/Button';
+import ModalFooter from './styled-components/ModalFooter';
 import Modal from './Modal';
-import BoardList from './BoardList'
-import { Region } from './ImageEditor'
+import BoardList from './BoardList';
+import Error from './styled-components/Error';
+import { Region } from './ImageEditor';
+import ErrorBoundary from 'react-error-boundary';
 import { addCards } from '../lib/trello';
 import { CloudinaryImage } from './ImageUploader';
 
@@ -26,7 +28,7 @@ const Warning = styled.p`
   &:last-of-type {
     margin-bottom: 1.5rem;
   }
-`
+`;
 
 const getPercentage = (value: number) => {
   return value / 100
@@ -34,6 +36,7 @@ const getPercentage = (value: number) => {
 
 const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
   const [modalOpen, setModalOpen] = React.useState(false)
+  const [boardListKey, setBoardListKey] = React.useState(0)
 
   async function onBoardSelect(boardId: string) {
     const { width, height, public_id } = imgData;
@@ -67,12 +70,15 @@ const ExportButton: React.SFC<ExportButtonProps> = ({ regions, imgData }) => {
       <Modal show={modalOpen}>
         <Warning>🚧 Beware! When exporting your components, they can not be edited later on. When exporting once more there will be duplicates.</Warning>
         <Warning>ℹ️ The cards will be added to the first list of the board.</Warning>
-
-        <React.Suspense fallback={<p>Loading <span>⌛️</span></p>}>
-          <BoardList
-            onBoardSelect={onBoardSelect}
-          />
-        </React.Suspense>
+        
+        <ErrorBoundary FallbackComponent={() => <Error>🤔 Something went wrong fetching the data.</Error>}>
+          <React.Suspense fallback={<p>Loading <span>⌛️</span></p>}>
+            <BoardList
+              onBoardSelect={onBoardSelect}
+              key={boardListKey}
+            />
+          </React.Suspense>
+        </ErrorBoundary>
 
         <ModalFooter>
           <Button

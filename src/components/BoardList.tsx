@@ -2,7 +2,7 @@ import * as React from 'react';
 const { unstable_createResource } = require('react-cache')
 import styled from '../styled-components';
 import { getBoards } from '../lib/trello';
-import Button from '../components/styled-components/Button'
+import Button from '../components/styled-components/Button';
 
 const boardsResource = unstable_createResource(getBoards)
 
@@ -35,7 +35,7 @@ const StyledBoardList = styled.ul`
   li:not(:last-of-type) {
     margin-bottom: 1rem;
   }
-`
+`;
 
 const Board = styled(Button)<BoardProps>`
   background: ${props => props.background};
