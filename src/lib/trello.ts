@@ -2,9 +2,6 @@ import authWindow from './authWindow'
 import queryString from 'query-string'
 import mergeComponents from './mergeComponents'
 
-const baseUrl = 'https://trello.com/1';
-const key = process.env.REACT_APP_TRELLO_KEY;
-
 interface Attachment {
   url: string
 }
@@ -20,8 +17,15 @@ async function authorize () {
     return
   }
 
-  const url = `${baseUrl}/authorize?key=${process.env.REACT_APP_TRELLO_KEY}&scope=read,write&name=Ticket maker&callback_method=postMessage&response_type=fragment&return_url=${window.location.href}`;
-  const token = await authWindow(url);
+  const query = queryString.stringify({
+    scope: 'read,write',
+    name: 'Componentizer',
+    callback_method: 'postMessage',
+    response_type: 'fragment',
+    return_url: window.location.href
+  });
+
+  const token = await authWindow(`.netlify/functions/trello-proxy/authorize?${query}`);
 
   localStorage.setItem('trello_token', token)
 }
@@ -29,28 +33,27 @@ async function authorize () {
 export async function getBoards () {
   await authorize()
   const token = localStorage.getItem('trello_token');
-  const query = queryString.stringify({ token, key: process.env.REACT_APP_TRELLO_KEY });
-    return fetch(`${baseUrl}/member/me/boards?${query}`)
-      .then(res => res.json())
+  const query = queryString.stringify({ token });
+  return fetch(`.netlify/functions/trello-proxy/member/me/boards?${query}`)
+    .then(res => res.json())
 }
 
 export async function addCards (boardId: string, cards: RegionComponent[]) {
   await authorize()
   const token = localStorage.getItem('trello_token');
   const listsQuery = queryString.stringify({ token, key })
-  const lists = await fetch(`${baseUrl}/boards/${boardId}/lists?${listsQuery}`).then(res => res.json())
+  const lists = await fetch(`.netlify/functions/trello-proxy/boards/${boardId}/lists?${listsQuery}`).then(res => res.json())
 
   let list: { id?: string } = {};
 
   if (!lists.length) {
     const listQuery = queryString.stringify({
       token,
-      key,
       idBoard: boardId,
       name: 'To do',
     })
 
-    list = await fetch(`${baseUrl}/lists?${listQuery}`, { method: 'POST' }).then(res => res.json())
+    list = await fetch(`.netlify/functions/trello-proxy/lists?${listQuery}`, { method: 'POST' }).then(res => res.json())
   } else {
     list = lists[0]
   }
@@ -61,25 +64,23 @@ export async function addCards (boardId: string, cards: RegionComponent[]) {
   return Promise.all(mergedCards.map(async card => {
     const cardQuery = queryString.stringify({
       token,
-      key,
       idList: list.id,
       name: card.name,
       desc: card.description
     })
 
-    const url = `${baseUrl}/cards?${cardQuery}`  
+    const url = `.netlify/functions/trello-proxy/cards?${cardQuery}`  
 
     const { id }: { id: string } = await fetch(url, { method: 'POST' }).then(res => res.json())
 
     return Promise.all(card.attachments.map(attachment => {
       const attachmentQuery = queryString.stringify({
         token,
-        key,
         url: attachment.url,
         name: card.name
       })
-  
-      const attachmentUrl = `${baseUrl}/cards/${id}/attachments?${attachmentQuery}`
+
+      const attachmentUrl = `.netlify/functions/trello-proxy/cards/${id}/attachments?${attachmentQuery}`
 
       return fetch(attachmentUrl, { method: 'POST' }).then(res => res.json())
     }))
