@@ -1,10 +1,7 @@
 import * as React from 'react';
-const { unstable_createResource } = require('react-cache')
 import styled from '../styled-components';
 import { getBoards } from '../lib/trello';
 import Button from '../components/styled-components/Button';
-
-const boardsResource = unstable_createResource(getBoards)
 
 type Brightness = 'dark' | 'light'
 
@@ -48,13 +45,24 @@ const Board = styled(Button)<BoardProps>`
 `
 
 const BoardList = ({ onBoardSelect }: BoardListProps) => {
+  const [boards, setBoards] = React.useState([])
+  const [loading, setLoading] = React.useState(false)
   const [loadingBoard, setLoadingBoard] = React.useState<string | null>(null);
 
-  const boards = boardsResource.read()
+  React.useEffect(() => {
+    setLoading(true)
+    
+    getBoards()
+      .then(boards => {
+        console.log(boards)
+        setBoards(boards)
+        setLoading(false)
+      })
+  }, [])
 
   return (
     <StyledBoardList>
-      {
+      { !loading ? (
         boards.map((board: Board) => (
           <li key={board.id}>
             <Board
@@ -69,7 +77,9 @@ const BoardList = ({ onBoardSelect }: BoardListProps) => {
             >{board.name}{loadingBoard === board.id && <span className="icon">⏳</span>}</Board>
           </li>
         ))
-      }
+      ) : (
+        <p>Loading <span>⌛️</span></p>
+      )}
     </StyledBoardList>
   )
 };

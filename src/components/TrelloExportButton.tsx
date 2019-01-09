@@ -47,11 +47,9 @@ const ExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProps) =
         <Warning>ℹ️ The cards will be added to the first list of the board.</Warning>
         
         <ErrorBoundary FallbackComponent={() => <Error>🤔 Something went wrong fetching the data.</Error>}>
-          <React.Suspense fallback={<p>Loading <span>⌛️</span></p>}>
-            <BoardList
-              onBoardSelect={(boardId: string) => onBoardSelect(boardId, regions, imgData, setModalOpen)}
-            />
-          </React.Suspense>
+          <BoardList
+            onBoardSelect={(boardId: string) => onBoardSelect(boardId, regions, imgData, setModalOpen)}
+          />
         </ErrorBoundary>
 
         <ModalFooter>
