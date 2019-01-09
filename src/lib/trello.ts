@@ -2,8 +2,6 @@ import authWindow from './authWindow'
 import queryString from 'query-string'
 import mergeComponents from './mergeComponents'
 
-const key = process.env.REACT_APP_TRELLO_KEY;
-
 interface Attachment {
   url: string
 }
