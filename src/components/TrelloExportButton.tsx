@@ -26,23 +26,20 @@ const Warning = styled.p`
   }
 `;
 
+const onBoardSelect = async (boardId: string, regions: Region[], imgData: CloudinaryImage, setModalOpen: Function) => {
+  const cards = regions.map(region => generateComponentImageUrl(region, imgData))
+
+  await addCards(boardId, cards);
+
+  setModalOpen(false);
+}
+
 const ExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProps) => {
   const [modalOpen, setModalOpen] = React.useState(false)
 
-  async function onBoardSelect(boardId: string) {
-    const cards = regions.map(region => generateComponentImageUrl(region, imgData))
-
-    await addCards(boardId, cards);
-
-    setModalOpen(false);
-  }
-
   return (
     <>
-      <Button
-        onClick={() => setModalOpen(true)}
-        {...props}
-      >
+      <Button onClick={() => setModalOpen(true)} {...props}>
         Export{modalOpen && 'ing'} to Trello  <span className="icon">🚀</span>
       </Button>
       <Modal show={modalOpen}>
@@ -52,7 +49,7 @@ const ExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProps) =
         <ErrorBoundary FallbackComponent={() => <Error>🤔 Something went wrong fetching the data.</Error>}>
           <React.Suspense fallback={<p>Loading <span>⌛️</span></p>}>
             <BoardList
-              onBoardSelect={onBoardSelect}
+              onBoardSelect={(boardId: string) => onBoardSelect(boardId, regions, imgData, setModalOpen)}
             />
           </React.Suspense>
         </ErrorBoundary>
