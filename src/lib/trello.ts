@@ -41,7 +41,7 @@ export async function getBoards () {
 export async function addCards (boardId: string, cards: RegionComponent[]) {
   await authorize()
   const token = localStorage.getItem('trello_token');
-  const listsQuery = queryString.stringify({ token, key })
+  const listsQuery = queryString.stringify({ token })
   const lists = await fetch(`.netlify/functions/trello-proxy/boards/${boardId}/lists?${listsQuery}`).then(res => res.json())
 
   let list: { id?: string } = {};
