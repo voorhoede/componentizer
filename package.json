@@ -46,7 +46,7 @@
     "build:lambda": "netlify-lambda build src/lambda",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "analyse": "npm run build -- --stats && webpack-bundle-analyzer ./build/bundle-stats.json"
+    "analyse": "npm run build:app -- --stats && webpack-bundle-analyzer ./build/bundle-stats.json"
   },
   "eslintConfig": {
     "extends": "react-app"
