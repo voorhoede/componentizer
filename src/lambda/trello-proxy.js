@@ -8,7 +8,9 @@ const key = process.env.TRELLO_KEY;
 const baseUrl = 'https://trello.com/1';
 
 export const handler = async (event, context, callback) => {
-  const path = event.path.replace('/trello-proxy', '')
+  const path = event.path
+    .replace('.netlify/functions/', '')
+    .replace('/trello-proxy', '')
   const query = { ...event.queryStringParameters, key }
   const formattedQuery = queryString.stringify(query)
   const url = `${path}?${formattedQuery}`
@@ -31,7 +33,7 @@ export const handler = async (event, context, callback) => {
   } catch(err) {
     callback(null, {
       statusCode: 400,
-      body: JSON.stringify(err)
+      body: JSON.stringify(err.statusMessage)
     })
   }
 
