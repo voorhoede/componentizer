@@ -10,7 +10,6 @@ const baseUrl = 'https://trello.com/1';
 export const handler = async (event, context, callback) => {
   const path = event.path.replace('/trello-proxy', '')
   const query = { ...event.queryStringParameters, key }
-  console.log(query)
   const formattedQuery = queryString.stringify(query)
   const url = `${path}?${formattedQuery}`
 

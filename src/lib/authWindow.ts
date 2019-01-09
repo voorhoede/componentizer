@@ -12,8 +12,6 @@ function authWindow (url: string): Promise<string> {
     height: 800,
   };
 
-  console.log(url)
-
   windowArea.left = Math.floor(window.screenX + ((window.outerWidth - windowArea.width) / 2));
   windowArea.top = Math.floor(window.screenY + ((window.outerHeight - windowArea.height) / 8));
 
