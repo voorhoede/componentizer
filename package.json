@@ -15,6 +15,7 @@
     "@types/react-router-dom": "^4.3.1",
     "@types/styled-components": "^4.1.4",
     "axios": "^0.18.0",
+    "dotenv": "^6.2.0",
     "file-saver": "^2.0.0",
     "filepond": "^3.7.3",
     "filepond-plugin-image-preview": "^3.1.6",
