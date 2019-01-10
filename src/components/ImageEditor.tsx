@@ -91,7 +91,7 @@ const onComponentFormCancel = (regions: Region[], regionIndex: number, updateReg
 }
 
 const ImageEditor = ({ imgData }: ImageEditorProps) => {
-  const [regions, updateRegions] = React.useState([].map((item: Region) => item));
+  const [regions, updateRegions] = React.useState<Region[]>([]);
   const [modalState, updateModalState] = React.useState({ show: false, index: 0 });
 
   const onRegionEdit = (index: number) => {
@@ -107,6 +107,14 @@ const ImageEditor = ({ imgData }: ImageEditorProps) => {
     }))
   }
 
+  const names = regions.reduce<string[]>((acc, region) => {
+    if (region.data.name) {
+      acc.push(region.data.name)
+    }
+
+    return acc
+  }, [])
+
   return (
     <>
       <Modal show={modalState.show}>
@@ -114,6 +122,7 @@ const ImageEditor = ({ imgData }: ImageEditorProps) => {
           region={regions.find((region: Region) => region.data.index === modalState.index)}
           onSubmit={(regionData: RegionData) => onComponentFormSubmit(regionData, regions, updateRegions, updateModalState)}
           onCancel={(regionIndex: number) => onComponentFormCancel(regions, regionIndex, updateRegions, updateModalState)}
+          names={names}
         />
       </Modal>
 

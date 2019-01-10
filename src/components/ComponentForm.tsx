@@ -1,22 +1,31 @@
 import * as React from 'react';
 import styled from '../styled-components'
-import InputField from "./InputField";
-import Button from '../components/styled-components/Button'
-import ModalFooter from './styled-components/ModalFooter';
-import TextArea from './TextArea';
+import Button from './styled-components/Button'
+import ModalFooter from './styled-components/ModalFooter'
+import Form from './styled-components/Form'
 import { Region } from './ImageEditor';
+import Downshift from 'downshift'
+
+const items = [
+  {value: 'apple'},
+  {value: 'pear'},
+  {value: 'orange'},
+  {value: 'grape'},
+  {value: 'banana'},
+]
 
 interface ComponentFormProps {
   onSubmit: Function
   onCancel: Function
   region?: Region
+  names: string[]
 }
 
-const StyledForm = styled.form`
+const StyledForm = styled(Form)`
   width: 100%;
 `;
 
-const ComponentForm= ({ onSubmit, region, onCancel }: ComponentFormProps) => {
+const ComponentForm= ({ onSubmit, region, onCancel, names }: ComponentFormProps) => {
   let nameInputRef = React.useRef<HTMLInputElement>(null);
   
   const [state, updateState] = React.useState({
@@ -25,12 +34,11 @@ const ComponentForm= ({ onSubmit, region, onCancel }: ComponentFormProps) => {
     index: region && region.data.index
   });
 
-  const onInput = (e: React.FormEvent<HTMLInputElement>) => {
+  const onInput = (e: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     e.preventDefault();
     const { name, value } = e.currentTarget;
     updateState(prevState => ({ ...prevState, [name]: value}))
   };
-
 
   React.useEffect(() => {
     nameInputRef.current && nameInputRef.current.focus()
@@ -43,22 +51,56 @@ const ComponentForm= ({ onSubmit, region, onCancel }: ComponentFormProps) => {
         onSubmit({ ...state });
       }}
     >
-      <InputField
-        label="Name"
-        id="name"
-        name="name"
-        onChange={onInput}
-        autoComplete="off"
-        value={state.name}
-        ref={nameInputRef}
-      />
-      <TextArea
-        label="Description"
-        id="description"
+      <Downshift
+        itemToString={names => names}
+      >
+        {({
+          getInputProps,
+          getItemProps,
+          getLabelProps,
+          getMenuProps,
+          isOpen,
+          inputValue,
+          highlightedIndex,
+        }) => (
+          <div style={{ position: 'relative' }}>
+            <label {...getLabelProps()}>Name</label>
+            <input {...getInputProps({
+              id: "name",
+              name: 'name',
+              onChange: onInput,
+              ref: nameInputRef
+            })}/>
+            <ul className="autosuggestions" {...getMenuProps()}>
+              {isOpen && state.name ? (
+                names
+                  .filter(name => !inputValue || name.includes(inputValue))
+                  .map((name, index) => (
+                    <li
+                      {...getItemProps({
+                        key: name,
+                        index,
+                        item: name,
+                        className: highlightedIndex === index ? 'selected' : ''
+                      })}
+                    >
+                      {name}
+                    </li>
+                  ))
+              ) : null}
+            </ul>
+          </div>
+        )}
+      </Downshift>
+
+      <label htmlFor="description">Description</label>
+      <textarea
         name="description"
+        id="description"
         value={state.description}
         onChange={onInput}
       />
+      
       <ModalFooter>
         <Button
           type="button"
