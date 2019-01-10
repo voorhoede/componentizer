@@ -6,7 +6,10 @@ import ComponentForm from "./ComponentForm";
 import RegionOptions, { RegionOptionsProps } from './RegionOptions'
 const TrelloExportButton = React.lazy(() => import('./TrelloExportButton'))
 const ImageExportButton = React.lazy(() => import('./ImageExportButton'))
+import useRegions from '../hooks/useRegions'
 import { CloudinaryImage } from './ImageUploader'
+
+const maxRegionSize = 10
 
 interface ImageEditorProps {
   imgData: CloudinaryImage
@@ -52,12 +55,24 @@ const ExportButtons = styled.div`
   }
 `
 
-const onRegionChange = (regions: Region[], updateRegions: Function, updateModalState: Function) => {
-  updateRegions((prevRegions: Region[]) => {
-    prevRegions.forEach((prevRegion: Region) => {
-      const updatedRegion: Region | undefined = regions.find((region: Region)=> region.data.index === prevRegion.data.index);
+const onRegionChange = (regions: Region[], setRegions: Function, updateModalState: Function, imgData: CloudinaryImage) => {
+  setRegions((prevRegions: Region[]) => {
+    regions = regions
+    .filter(region => {
+        const prevRegionState: Region | undefined = prevRegions.find((prevRegion: Region)=> region.data.index === prevRegion.data.index);
+        
+        if (prevRegionState && !prevRegionState.new) { return true }
 
-      if (prevRegion.new !== updatedRegion!.new) {
+        const width = Math.round(region.width * (imgData.width / 100));
+        const height = Math.round(region.height * (imgData.height / 100));
+
+        return region.isChanging || (width > maxRegionSize && height > maxRegionSize);
+      })
+
+    prevRegions.forEach((prevRegion: Region) => {
+      const nextRegionState: Region | undefined = regions.find((region: Region)=> region.data.index === prevRegion.data.index);
+
+      if (nextRegionState && prevRegion.new !== nextRegionState.new) {
         updateModalState({
           show: true,
           index: prevRegion.data.index
@@ -69,8 +84,8 @@ const onRegionChange = (regions: Region[], updateRegions: Function, updateModalS
   })
 }
 
-const onComponentFormSubmit = (regionData: RegionData, regions: Region[], updateRegions: Function, updateModalState: Function) => {
-  updateRegions(regions.map((region: Region) => {
+const onComponentFormSubmit = (regionData: RegionData, regions: Region[], setRegions: Function, updateModalState: Function) => {
+  setRegions(regions.map((region: Region) => {
     if (region.data.index === regionData.index) {
       region.data = regionData
     }
@@ -80,32 +95,23 @@ const onComponentFormSubmit = (regionData: RegionData, regions: Region[], update
   updateModalState({ index: 0, show: false })
 }
 
-const onComponentFormCancel = (regions: Region[], regionIndex: number, updateRegions: Function, updateModalState: Function) => {
+const onComponentFormCancel = (regions: Region[], regionIndex: number, setRegions: Function, updateModalState: Function) => {
   const region = regions.find((region: Region) => region.data.index === regionIndex)
 
   if (region && !region.data.name) {
-    updateRegions(regions.filter(region => region.data.index !== regionIndex));
+    setRegions(regions.filter(region => region.data.index !== regionIndex));
   }
 
   updateModalState({ index: 0, show: false })
 }
 
 const ImageEditor = ({ imgData }: ImageEditorProps) => {
-  const [regions, updateRegions] = React.useState<Region[]>([]);
+  const [regions, setRegions] = React.useState<Region[]>([]);
   const [modalState, updateModalState] = React.useState({ show: false, index: 0 });
 
-  const onRegionEdit = (index: number) => {
-    updateModalState({
-      show: true,
-      index
-    })
-  }
+  const onRegionEdit = (index: number) => updateModalState({ show: true, index})
 
-  const onRegionDelete = (index: number) => {
-    updateRegions(regions.filter(region => {
-      return region.data.index !== index
-    }))
-  }
+  const onRegionDelete = (index: number) => setRegions(regions.filter(region => region.data.index !== index))
 
   const names = regions.reduce<string[]>((acc, region) => {
     if (region.data.name && !acc.find(n => n === region.data.name)) {
@@ -120,8 +126,8 @@ const ImageEditor = ({ imgData }: ImageEditorProps) => {
       <Modal show={modalState.show}>
         <ComponentForm
           region={regions.find((region: Region) => region.data.index === modalState.index)}
-          onSubmit={(regionData: RegionData) => onComponentFormSubmit(regionData, regions, updateRegions, updateModalState)}
-          onCancel={(regionIndex: number) => onComponentFormCancel(regions, regionIndex, updateRegions, updateModalState)}
+          onSubmit={(regionData: RegionData) => onComponentFormSubmit(regionData, regions, setRegions, updateModalState)}
+          onCancel={(regionIndex: number) => onComponentFormCancel(regions, regionIndex, setRegions, updateModalState)}
           names={names}
         />
       </Modal>
@@ -130,7 +136,7 @@ const ImageEditor = ({ imgData }: ImageEditorProps) => {
         <ReactRegionSelect
           style={{ maxWidth: '80%' }}
           regions={regions}
-          onChange={(regions: Region[]) => onRegionChange(regions, updateRegions, updateModalState)}
+          onChange={(regions: Region[]) => onRegionChange(regions, setRegions, updateModalState, imgData)}
           regionRenderer={(props: RegionOptionsProps) => (
             <RegionOptions onEditClick={onRegionEdit} onDeleteClick={onRegionDelete} {...props} />
           )}
