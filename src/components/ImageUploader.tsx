@@ -12,6 +12,8 @@ export interface CloudinaryImage {
   height: number
 }
 
+const acceptedFileTypes = ['image/png', 'image/jpeg', 'image/svg', 'image/gif']
+
 const StyledImageUploader = styled.div`
   width: 100%;
   max-width: 25rem;
@@ -41,6 +43,8 @@ const ImageUploader = ({ history }: RouteComponentProps) => {
         <FilePond
           allowMultiple={false}
           server={createCloudinary(process.env.REACT_APP_CLOUDINARY_CLOUD!, process.env.REACT_APP_CLOUDINARY_PRESET!, onSuccess)}
+          acceptedFileTypes={acceptedFileTypes}
+          accept={acceptedFileTypes.join()}
         />
       </React.Suspense>
     </StyledImageUploader>
