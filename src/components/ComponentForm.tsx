@@ -93,6 +93,13 @@ const ComponentForm= ({ onSubmit, region, onCancel, names }: ComponentFormProps)
         id="description"
         value={state.description}
         onChange={onInput}
+        onKeyPress={e => {
+          var code = (e.keyCode ? e.keyCode : e.which);
+
+          if(code == 13 && !e.shiftKey) {
+            onSubmit({ ...state })
+          }
+        }}
       />
       
       <ModalFooter>
