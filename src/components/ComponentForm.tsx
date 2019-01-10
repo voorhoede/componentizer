@@ -87,7 +87,7 @@ const ComponentForm= ({ onSubmit, region, onCancel, names }: ComponentFormProps)
         )}
       </Downshift>
 
-      <label htmlFor="description">Description</label>
+      <label htmlFor="description">Description <span className="info">(not required)</span></label>
       <textarea
         name="description"
         id="description"
@@ -96,7 +96,7 @@ const ComponentForm= ({ onSubmit, region, onCancel, names }: ComponentFormProps)
         onKeyPress={e => {
           var code = (e.keyCode ? e.keyCode : e.which);
 
-          if(code == 13 && !e.shiftKey) {
+          if(code == 13 && !e.shiftKey && state.name) {
             onSubmit({ ...state })
           }
         }}

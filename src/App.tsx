@@ -3,6 +3,7 @@ import AppRouter from "./AppRouter";
 import { ThemeProvider, createGlobalStyle, css } from './styled-components'
 
 const theme = {
+  lightTextColor: '#747d8c',
   themeColor: '#5f27cd',
   neutralColor: '#f1f2f6',
   errorColor: '#c23616',

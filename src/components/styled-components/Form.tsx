@@ -4,6 +4,10 @@ export default styled.form`
   label {
     margin-bottom: 0.5rem;
     display: block;
+
+    .info {
+      color: ${props => props.theme.lightTextColor}
+    }
   }
 
   input {

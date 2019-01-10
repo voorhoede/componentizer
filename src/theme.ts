@@ -5,4 +5,5 @@ export default interface ThemeInterface {
   borderRadiusDefault: string
   borderRadiusLarge: string
   borderColor: string
+  lightTextColor: string
 }
