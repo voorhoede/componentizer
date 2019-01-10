@@ -69,13 +69,14 @@ const ComponentForm= ({ onSubmit, region, onCancel, names }: ComponentFormProps)
             <input {...getInputProps({
               id: "name",
               name: 'name',
+              value: state.name,
               onChange: onInput,
               ref: nameInputRef
             })}/>
             <ul className="autosuggestions" {...getMenuProps()}>
               {isOpen && state.name ? (
                 names
-                  .filter(name => !inputValue || name.includes(inputValue))
+                  .filter(name => !inputValue || name.toLowerCase().includes(inputValue.toLowerCase()))
                   .map((name, index) => (
                     <li
                       {...getItemProps({
