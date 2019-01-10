@@ -6,7 +6,6 @@ import ComponentForm from "./ComponentForm";
 import RegionOptions, { RegionOptionsProps } from './RegionOptions'
 const TrelloExportButton = React.lazy(() => import('./TrelloExportButton'))
 const ImageExportButton = React.lazy(() => import('./ImageExportButton'))
-import useRegions from '../hooks/useRegions'
 import { CloudinaryImage } from './ImageUploader'
 
 const maxRegionSize = 10
