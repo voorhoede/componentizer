@@ -6,14 +6,6 @@ import Form from './styled-components/Form'
 import { Region } from './ImageEditor';
 import Downshift from 'downshift'
 
-const items = [
-  {value: 'apple'},
-  {value: 'pear'},
-  {value: 'orange'},
-  {value: 'grape'},
-  {value: 'banana'},
-]
-
 interface ComponentFormProps {
   onSubmit: Function
   onCancel: Function
@@ -29,8 +21,8 @@ const ComponentForm= ({ onSubmit, region, onCancel, names }: ComponentFormProps)
   let nameInputRef = React.useRef<HTMLInputElement>(null);
   
   const [state, updateState] = React.useState({
-    name: region && region.data.name || '',
-    description: region && region.data.description || '',
+    name: region ? region.data.name : '',
+    description: region ? region.data.description : '',
     index: region && region.data.index
   });
 
