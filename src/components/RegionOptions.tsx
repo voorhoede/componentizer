@@ -14,7 +14,9 @@ const StyledRegionOptions = styled.div`
   pointer-events: none;
   text-align: left;
   background-color: #fff;
+  align-items: flex-start;
   display: flex;
+  flex-wrap: wrap;
 `;
 
 const NameLabel = styled.p`
@@ -23,7 +25,8 @@ const NameLabel = styled.p`
 `
 
 const Actions = styled.div`
-  margin-left: auto;
+  display: flex;
+  flex-wrap: nowrap;
 `
 
 const Action = styled.button`
