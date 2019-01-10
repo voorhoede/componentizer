@@ -24,5 +24,6 @@ export default styled.button`
 
   .icon {
     margin-left: 0.25rem;
+    speak: none;
   }
 `

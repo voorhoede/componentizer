@@ -1,3 +1,8 @@
+@font-face {
+  font-family: Lazer84;
+  src: url(/fonts/Lazer84.woff2);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -23,7 +28,17 @@ html, body, #root, .App {
   height: 100%;
 }
 
-@font-face {
-  font-family: Lazer84;
-  src: url(/fonts/Lazer84.woff2);
+.a11y-sr-only {
+  overflow: hidden;
+  position: absolute;
+  margin: -1px;
+  padding: 0;
+  width: 1px;
+  height: 1px;
+  border: 0;
+  clip: rect(0 0 0 0);
+}
+
+.silencio {
+  speak: none
 }

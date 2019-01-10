@@ -43,8 +43,14 @@ const RegionOptions = ({ data, isChanging, onEditClick, onDeleteClick }: RegionO
       <>
         <NameLabel>{data.name}</NameLabel>
         <Actions key={data.index}>
-          <Action onClick={() => onDeleteClick(data.index)}>🗑</Action>
-          <Action onClick={() => onEditClick(data.index)}>✏️</Action>
+          <Action onClick={() => onDeleteClick(data.index)}>
+            <span className="a11y-sr-only">Delete</span>
+            <span className="silencio">🗑</span>
+          </Action>
+          <Action onClick={() => onEditClick(data.index)}>
+            <span className="a11y-sr-only">Edit</span>
+            <span className="silencio">✏️</span>
+          </Action>
         </Actions>
       </>
     )}
