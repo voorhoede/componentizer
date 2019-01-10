@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
-import ImageUploader from './components/ImageUploader'
+import React from 'react';
 import AppRouter from "./AppRouter";
-import { ThemeProvider } from './styled-components'
+import { ThemeProvider, createGlobalStyle, css } from './styled-components'
 
 const theme = {
   themeColor: '#5f27cd',
@@ -12,12 +11,25 @@ const theme = {
   borderColor: '#d1ccc0'
 };
 
+const GlobalStyle = createGlobalStyle`
+  ${'ontouchstart' in window && css`
+    html,
+    body {
+      position: fixed;
+      overflow: hidden;
+    }
+  `}
+`
+
 const App = () => (
-  <ThemeProvider theme={theme}>
-    <div className="App">
-      <AppRouter/>
-    </div>
-  </ThemeProvider>
+  <>
+    <GlobalStyle />
+    <ThemeProvider theme={theme}>
+      <div className="App">
+        <AppRouter/>
+      </div>
+    </ThemeProvider>
+  </>
 )
 
 export default App;
