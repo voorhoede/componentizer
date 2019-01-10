@@ -11,8 +11,11 @@ const theme = {
   borderColor: '#d1ccc0'
 };
 
+const hasMouse = window.matchMedia('@media (pointer: fine)').matches;
+const isTouchDevice = ('ontouchstart' in window && !hasMouse);
+
 const GlobalStyle = createGlobalStyle`
-  ${'ontouchstart' in window && css`
+  ${(isTouchDevice) && css`
     html,
     body {
       position: fixed;
