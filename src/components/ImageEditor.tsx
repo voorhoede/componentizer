@@ -108,7 +108,7 @@ const ImageEditor = ({ imgData }: ImageEditorProps) => {
   }
 
   const names = regions.reduce<string[]>((acc, region) => {
-    if (region.data.name) {
+    if (region.data.name && !acc.find(n => n === region.data.name)) {
       acc.push(region.data.name)
     }
 

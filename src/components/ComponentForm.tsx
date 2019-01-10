@@ -53,6 +53,7 @@ const ComponentForm= ({ onSubmit, region, onCancel, names }: ComponentFormProps)
     >
       <Downshift
         itemToString={names => names}
+        onChange={selection => updateState({...state, name: selection})}
       >
         {({
           getInputProps,
