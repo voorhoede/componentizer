@@ -147,25 +147,16 @@ const ImageEditor = ({ imgData }: ImageEditorProps) => {
       </StyledImageEditor>
 
       <ExportButtons>
-        <DropDown
-          triggerText="Export"
-          disabled={!regions.length}
-          listItems={[
-            <React.Suspense fallback={null}>
-              <ImageExportButton regions={regions} imgData={imgData} />
-            </React.Suspense>,
-            <React.Suspense fallback={null}>
-              <TrelloExportButton regions={regions} imgData={imgData} />
-            </React.Suspense>
-          ]}
-        />
-
-        {/* <React.Suspense fallback={null}>
-          <ImageExportButton disabled={!regions.length} regions={regions} imgData={imgData} />
-        </React.Suspense>
         <React.Suspense fallback={null}>
-          <TrelloExportButton disabled={!regions.length} regions={regions} imgData={imgData} />
-        </React.Suspense> */}
+          <DropDown
+            triggerText="Export"
+            disabled={!regions.length}
+            listItems={[
+              <ImageExportButton regions={regions} imgData={imgData} />,
+              <TrelloExportButton regions={regions} imgData={imgData} />
+            ]}
+          />
+        </React.Suspense>
       </ExportButtons>
     </>
   )
