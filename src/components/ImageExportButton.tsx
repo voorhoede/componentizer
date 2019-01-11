@@ -11,7 +11,6 @@ import mergeComponents from '../lib/mergeComponents'
 interface ImageExportButtonProps {
   regions: Region[]
   imgData: CloudinaryImage
-  disabled: boolean
   [propName: string]: {}
 }
 
@@ -66,7 +65,7 @@ const ExportButton = ({ regions, imgData, ...props}: ImageExportButtonProps) => 
     <Button
       onClick={exportAsImages}
       {...props}
-      disabled={props.disabled || loading}
+      disabled={loading}
     >Export{ loading && 'ing' } as images <span className="icon">{ loading ? '⏳' : '🖼'}</span></Button>
   )
 }

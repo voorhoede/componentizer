@@ -7,6 +7,8 @@ import RegionOptions, { RegionOptionsProps } from './RegionOptions'
 const TrelloExportButton = React.lazy(() => import('./TrelloExportButton'))
 const ImageExportButton = React.lazy(() => import('./ImageExportButton'))
 import { CloudinaryImage } from './ImageUploader'
+import DropDown from './DropDown';
+import Button from './styled-components/Button';
 
 const maxRegionSize = 10
 
@@ -145,12 +147,25 @@ const ImageEditor = ({ imgData }: ImageEditorProps) => {
       </StyledImageEditor>
 
       <ExportButtons>
-        <React.Suspense fallback={null}>
+        <DropDown
+          triggerText="Export"
+          disabled={!regions.length}
+          listItems={[
+            <React.Suspense fallback={null}>
+              <ImageExportButton regions={regions} imgData={imgData} />
+            </React.Suspense>,
+            <React.Suspense fallback={null}>
+              <TrelloExportButton regions={regions} imgData={imgData} />
+            </React.Suspense>
+          ]}
+        />
+
+        {/* <React.Suspense fallback={null}>
           <ImageExportButton disabled={!regions.length} regions={regions} imgData={imgData} />
         </React.Suspense>
         <React.Suspense fallback={null}>
           <TrelloExportButton disabled={!regions.length} regions={regions} imgData={imgData} />
-        </React.Suspense>
+        </React.Suspense> */}
       </ExportButtons>
     </>
   )
