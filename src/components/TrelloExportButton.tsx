@@ -3,7 +3,7 @@ import styled from '../styled-components';
 import Button from './styled-components/Button';
 import ModalFooter from './styled-components/ModalFooter';
 import Modal from './Modal';
-import BoardList from './BoardList';
+import TrelloBoardList from './TrelloBoardList';
 import Error from './styled-components/Error';
 import { Region } from './ImageEditor';
 import { CloudinaryImage } from './ImageUploader';
@@ -47,7 +47,7 @@ const ExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProps) =
         <Warning>ℹ️ The cards will be added to the first list of the board.</Warning>
         
         <ErrorBoundary FallbackComponent={() => <Error>🤔 Something went wrong fetching the data.</Error>}>
-          <BoardList
+          <TrelloBoardList
             onBoardSelect={(boardId: string) => onBoardSelect(boardId, regions, imgData, setModalOpen)}
           />
         </ErrorBoundary>

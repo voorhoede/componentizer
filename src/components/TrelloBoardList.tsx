@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styled from '../styled-components';
 import { getBoards } from '../lib/trello';
-import Button from '../components/styled-components/Button';
+import Button from './styled-components/Button';
 
 type Brightness = 'dark' | 'light'
 
