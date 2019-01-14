@@ -56,7 +56,7 @@ const ListItem = posed.li({
 })
 
 const DropDown = ({ triggerText, listItems, disabled }: DropDownProps) => {
-  const [open, toggle] = React.useState(false)
+  const [open, toggle] = React.useState(true)
 
   return (
     <StyledDropDown>

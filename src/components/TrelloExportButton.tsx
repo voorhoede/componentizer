@@ -2,8 +2,9 @@ import * as React from 'react';
 import styled from '../styled-components';
 import Button from './styled-components/Button';
 import ModalFooter from './styled-components/ModalFooter';
+import Warning from './styled-components/Warning';
 import Modal from './Modal';
-import TrelloBoardList from './TrelloBoardList';
+import TrelloProjectList from './TrelloProjectList';
 import Error from './styled-components/Error';
 import { Region } from './ImageEditor';
 import { CloudinaryImage } from './ImageUploader';
@@ -17,15 +18,6 @@ interface TrelloExportButtonProps {
   [propName: string]: {}
 }
 
-const Warning = styled.p`
-  display: block;
-  margin-bottom: 1rem;
-
-  &:last-of-type {
-    margin-bottom: 1.5rem;
-  }
-`;
-
 const onBoardSelect = async (boardId: string, regions: Region[], imgData: CloudinaryImage, setModalOpen: Function) => {
   const cards = regions.map(region => generateComponentImageUrl(region, imgData))
 
@@ -34,7 +26,7 @@ const onBoardSelect = async (boardId: string, regions: Region[], imgData: Cloudi
   setModalOpen(false);
 }
 
-const ExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProps) => {
+const TrelloExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProps) => {
   const [modalOpen, setModalOpen] = React.useState(false)
 
   return (
@@ -43,11 +35,10 @@ const ExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProps) =
         Export{modalOpen && 'ing'} to Trello  <span className="icon">🚀</span>
       </Button>
       <Modal show={modalOpen}>
-        <Warning>🚧 Beware! When exporting your components, they can not be edited later on. When exporting once more there will be duplicates.</Warning>
         <Warning>ℹ️ The cards will be added to the first list of the board.</Warning>
         
         <ErrorBoundary FallbackComponent={() => <Error>🤔 Something went wrong fetching the data.</Error>}>
-          <TrelloBoardList
+          <TrelloProjectList
             onBoardSelect={(boardId: string) => onBoardSelect(boardId, regions, imgData, setModalOpen)}
           />
         </ErrorBoundary>
@@ -60,4 +51,4 @@ const ExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProps) =
   )
 };
 
-export default ExportButton
+export default TrelloExportButton
