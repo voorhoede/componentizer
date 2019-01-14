@@ -168,7 +168,7 @@ const ImageEditor = ({ imgData }: ImageEditorProps) => {
             listItems={[
               <ImageExportButton regions={regions} imgData={imgData} />,
               <TrelloExportButton regions={regions} imgData={imgData} />,
-              <JiraExportButton />
+              <JiraExportButton regions={regions} imgData={imgData} />
             ]}
           />
         </React.Suspense>

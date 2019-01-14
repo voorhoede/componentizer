@@ -11,6 +11,7 @@ interface ProjectPrefs {
 
 interface Project {
   id: string
+  key?: string
   name: string
   prefs?: ProjectPrefs
 }
@@ -58,8 +59,8 @@ const ProjectList = ({ projects, onProjectSelect, loading }: ProjectList) => {
               backgroundBrightness={project.prefs && project.prefs.backgroundBrightness}
               disabled={Boolean(loadingId)}
               onClick={async () => {
-                setLoadingBoard(loadingId)
-                await onProjectSelect(project.id)
+                setLoadingBoard(project.id)
+                await onProjectSelect(project.key || project.id)
                 setLoadingBoard(null)
               }}
             >{project.name}{loadingId === project.id && <span className="icon">⏳</span>}</Board>

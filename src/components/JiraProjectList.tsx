@@ -2,7 +2,11 @@ import * as React from 'react'
 import { getProjects } from '../lib/jira'
 import ProjectList from './ProjectList';
 
-const JiraProjectList = () => {
+interface JiraProjectListProps {
+  onProjectSelect: Function
+}
+
+const JiraProjectList = ({ onProjectSelect }: JiraProjectListProps) => {
   const [projects, setProjects] = React.useState([])
   const [loading, setLoading] = React.useState(false)
 
@@ -20,7 +24,7 @@ const JiraProjectList = () => {
     <ProjectList
       projects={projects}
       loading={loading}
-      onProjectSelect={(id: string) => console.log(id)}
+      onProjectSelect={onProjectSelect}
     />
   )
 }

@@ -39,7 +39,7 @@ const TrelloExportButton = ({ regions, imgData, ...props }: TrelloExportButtonPr
         
         <ErrorBoundary FallbackComponent={() => <Error>🤔 Something went wrong fetching the data.</Error>}>
           <TrelloProjectList
-            onBoardSelect={(boardId: string) => onBoardSelect(boardId, regions, imgData, setModalOpen)}
+            onBoardSelect={(id: string) => onBoardSelect(id, regions, imgData, setModalOpen)}
           />
         </ErrorBoundary>
 

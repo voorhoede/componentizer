@@ -1,5 +1,6 @@
 import queryString from 'query-string'
 import jiraAuthWindow from '../lib/jiraAuthWindow'
+import { RegionComponent } from './trello';
 
 let jira_token: null | string = localStorage.getItem('jira_token')
 let jira_cloudId: null | string = localStorage.getItem('jira_cloudId')
@@ -54,7 +55,36 @@ export async function getProjects() {
     cloudId: jira_cloudId
   })
 
-  return fetch(`.netlify/functions/jira-proxy/project?${query}`, )
+  return fetch(`.netlify/functions/jira-proxy/project?${query}`)
+    .then(res => res.json())
+    .catch(err => console.log(err))
+}
+
+export async function addIssues (issues: RegionComponent[], projectId: string) {
+  await authenticate()
+
+  const query = queryString.stringify({
+    token: jira_token,
+    cloudId: jira_cloudId
+  })
+
+  await fetch(`.netlify/functions/jira-proxy/issue/bulk?${query}`, {
+    method: 'POST',
+    body: JSON.stringify({
+      issueUpdates: issues.map(issue => ({
+        fields: {
+          summary: issue.name,
+          description: issue.description,
+          project: {
+            key: projectId
+          },
+          issuetype: {
+            name: 'Story'
+          }
+        },
+      }))
+    })
+  })
     .then(res => res.json())
     .catch(err => console.log(err))
 }
