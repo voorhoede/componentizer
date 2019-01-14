@@ -1,4 +1,4 @@
-import authWindow from './authWindow'
+import trelloAuthWindow from './trelloAuthWindow'
 import queryString from 'query-string'
 import mergeComponents from './mergeComponents'
 
@@ -22,10 +22,11 @@ async function authorize () {
     name: 'Componentizer',
     callback_method: 'postMessage',
     response_type: 'fragment',
-    return_url: window.location.href
+    return_url: window.location.href,
+    prompt: 'consent'
   });
 
-  const token = await authWindow(`.netlify/functions/trello-proxy/authorize?${query}`);
+  const token = await trelloAuthWindow(`.netlify/functions/trello-proxy/authorize?${query}`);
 
   localStorage.setItem('trello_token', token)
 }

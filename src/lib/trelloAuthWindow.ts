@@ -26,6 +26,8 @@ function authWindow (url: string): Promise<string> {
 
   const authPromise = new Promise<string>((resolve, reject) => {
     window.addEventListener('message', e => {
+      console.log(e)
+
       if (e.data) {
         resolve(e.data);
 
