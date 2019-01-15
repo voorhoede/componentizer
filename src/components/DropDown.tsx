@@ -1,5 +1,5 @@
 import * as React from 'react';
-import styled from '../styled-components';
+import styled, { css } from '../styled-components';
 import posed, { PoseGroup } from 'react-pose';
 import Button from './styled-components/Button';
 
@@ -32,6 +32,10 @@ const DropDownList = styled(posed.ul({
   flex-direction: column;
   align-items: flex-end;
 
+  ${props => props.hide && css`
+    display: none;
+  `}
+
   li {
     margin-top: 0.5rem;
   }
@@ -46,24 +50,45 @@ const ListItem = posed.li({
   open: {
     y: 0,
     opacity: 1,
-    transition
+    transition,
   },
   closed: {
     y: -8,
     opacity: 0,
-    transition
+    transition,
   }
 })
 
 const DropDown = ({ triggerText, listItems, disabled }: DropDownProps) => {
-  const [open, toggle] = React.useState(true)
+  const [open, toggle] = React.useState(false)
+  const [show, setShow] = React.useState(false)
+
+  const onAnimationComplete = () => {
+    if (open) {
+      setShow(true)
+    } else {
+      setShow(false)
+    }
+  }
+
+  const onButtonClick = () => {
+    if (!open) setShow(true)
+
+    toggle(!open)
+  }
 
   return (
     <StyledDropDown>
-      <Button onClick={() => toggle(!open)} disabled={disabled}>
+      <Button onClick={onButtonClick} disabled={disabled}>
         {triggerText}<span className="icon">{open ? '👆' : '👇'}</span>
       </Button>
-      <DropDownList initialPose="closed" pose={open ? 'open' : 'closed'}>
+
+      <DropDownList
+        initialPose="closed"
+        pose={open ? 'open' : 'closed'}
+        onPoseComplete={() => onAnimationComplete()}
+        hide={!open && !show}
+      >
         {
           listItems.map((listItem, index) => (
             <ListItem key={index}>
