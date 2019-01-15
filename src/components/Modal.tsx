@@ -47,7 +47,8 @@ const StyledDialog = styled.dialog`
   border: none;
   padding: 1.5rem;
   border-radius: ${props => props.theme.borderRadiusLarge};
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 `;
 
 const Shade = styled(posed.div({

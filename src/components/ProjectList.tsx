@@ -30,6 +30,8 @@ interface ProjectList {
 const StyledBoardList = styled.ul`
   list-style: none;
   margin-bottom: 1rem;
+  flex: 1;
+  overflow-y: auto;
 
   li:not(:last-of-type) {
     margin-bottom: 1rem;
@@ -43,6 +45,10 @@ const Board = styled(Button)<ProjectProps>`
 
   .icon {
     margin-left: 0.5rem;
+  }
+
+  &:hover:not([disabled]) {
+    transform: none;
   }
 `
 

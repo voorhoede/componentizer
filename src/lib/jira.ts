@@ -69,7 +69,7 @@ export async function addIssues (issues: RegionComponent[], projectId: string) {
     cloudId: jira_cloudId
   })
 
-  await fetch(`.netlify/functions/jira-proxy/issue/bulk?${query}`, {
+  const createdIssues = await fetch(`.netlify/functions/jira-proxy/issue/bulk?${query}`, {
     method: 'POST',
     body: JSON.stringify({
       issueUpdates: issues.map(issue => ({
@@ -88,4 +88,8 @@ export async function addIssues (issues: RegionComponent[], projectId: string) {
   })
     .then(res => res.json())
     .catch(err => console.log(err))
+
+  // Promise.all(createdIssues.issues.map(issue => {
+  //   return fetch()
+  // })
 }
