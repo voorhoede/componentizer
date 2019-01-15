@@ -5,7 +5,6 @@ import Modal from "./Modal";
 import ComponentForm from "./ComponentForm";
 import RegionOptions, { RegionOptionsProps } from './RegionOptions'
 const TrelloExportButton = React.lazy(() => import('./TrelloExportButton'))
-const JiraExportButton = React.lazy(() => import('./JiraExportButton'))
 const ImageExportButton = React.lazy(() => import('./ImageExportButton'))
 import { CloudinaryImage } from './ImageUploader'
 import DropDown from './DropDown';
@@ -154,7 +153,6 @@ const ImageEditor = ({ imgData }: ImageEditorProps) => {
             listItems={[
               <ImageExportButton regions={regions} imgData={imgData} />,
               <TrelloExportButton regions={regions} imgData={imgData} />,
-              <JiraExportButton regions={regions} imgData={imgData} />
             ]}
           />
         </React.Suspense>
