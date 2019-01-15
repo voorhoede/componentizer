@@ -7,6 +7,7 @@ import JSZip from 'jszip'
 import { saveAs } from 'file-saver';
 import mergeComponents from '../lib/mergeComponents'
 import getImageFiles from '../lib/getImageFiles'
+import { format } from 'date-fns'
 
 interface ImageExportButtonProps {
   regions: Region[]
@@ -24,7 +25,8 @@ const ExportButton = ({ regions, imgData, ...props}: ImageExportButtonProps) => 
   
   const exportAsImages = async () => {
     const zip = new JSZip()
-    const folder = zip.folder('components')
+    const folderName = `components-${format(new Date(), 'YYYY-MM-DD_hhmm')}`
+    const folder = zip.folder(folderName)
 
     setLoading(true)
 
@@ -48,7 +50,7 @@ const ExportButton = ({ regions, imgData, ...props}: ImageExportButtonProps) => 
 
     // save to zip file
     zip.generateAsync({ type: "blob" })
-        .then(blob => saveAs(blob, 'components.zip'))
+        .then(blob => saveAs(blob, `${folderName}.zip`))
         .catch(e => console.log(e));
     
     setLoading(false)
