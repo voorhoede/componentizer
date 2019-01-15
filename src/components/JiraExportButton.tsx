@@ -2,6 +2,7 @@ import * as React from 'react';
 import JiraProjectList from './JiraProjectList';
 import Button from './styled-components/Button';
 import Warning from './styled-components/Warning';
+import ModalFooter from './styled-components/ModalFooter';
 import Error from './styled-components/Error';
 import ErrorBoundary from 'react-error-boundary';
 import Modal from './Modal';
@@ -38,6 +39,10 @@ const JiraExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProp
             onProjectSelect={(id: string) => onProjectSelect(id, regions, imgData, setModalOpen)}
           />
         </ErrorBoundary>
+
+        <ModalFooter>
+          <Button onClick={() => setModalOpen(false)}>Cancel</Button>
+        </ModalFooter>
       </Modal>
     </>
   )

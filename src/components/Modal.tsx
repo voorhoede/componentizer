@@ -1,6 +1,7 @@
 import * as React from 'react';
 import posed, { PoseGroup } from 'react-pose';
 import styled from '../styled-components'
+import ReactDOM from 'react-dom';
 
 interface ModalProps {
   show: boolean
@@ -64,18 +65,21 @@ const Shade = styled(posed.div({
 `;
 
 const Modal = ({ show, children }: ModalProps) => (
-  <PoseGroup>
-    {
-      show &&  [
-        <Shade style={{ position: 'fixed' }} key="shade"/>,
-        <StyledModal key="modal">
-          <StyledDialog open>
-            {children}
-          </StyledDialog>
-        </StyledModal>
-      ]
-    }    
-  </PoseGroup>
+  ReactDOM.createPortal(
+    <PoseGroup>
+      {
+        show &&  [
+          <Shade style={{ position: 'fixed' }} key="shade"/>,
+          <StyledModal key="modal">
+            <StyledDialog open>
+              {children}
+            </StyledDialog>
+          </StyledModal>
+        ]
+      }    
+    </PoseGroup>,
+    document.body
+  )
 );
 
 export default Modal
