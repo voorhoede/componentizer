@@ -1,5 +1,6 @@
 import queryString from 'query-string'
-import jiraAuthWindow from '../lib/jiraAuthWindow'
+import jiraAuthWindow from './jiraAuthWindow'
+import getImageFiles from './getImageFiles'
 import { RegionComponent } from './trello';
 
 let jira_token: null | string = localStorage.getItem('jira_token')
@@ -89,7 +90,29 @@ export async function addIssues (issues: RegionComponent[], projectId: string) {
     .then(res => res.json())
     .catch(err => console.log(err))
 
-  // Promise.all(createdIssues.issues.map(issue => {
-  //   return fetch()
-  // })
+    
+  const files = await getImageFiles(issues)
+
+  const formData = new FormData()
+
+  files.forEach(file => {
+    file.images.forEach(image => {
+      formData.append(`${file.name}[]` || 'image[]', image)
+    })
+  })
+
+  createdIssues.issues.forEach((issue: { id: string }, index: number) => {
+    fetch(`.netlify/functions/jira-proxy/issue/${issue.id}/attachments?${query}`, {
+      method: 'POST',
+      body: formData,
+      headers: {
+        'Accept': 'application/json'
+      }
+    })
+      .then(res => res.json())
+      .then(res => console.log(res))
+      .catch(err => {
+        console.log(err)
+      })
+  })
 }

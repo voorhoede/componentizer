@@ -5,8 +5,8 @@ import { CloudinaryImage } from './ImageUploader';
 import generateComponentImageUrl from '../lib/generateComponentImageUrl';
 import JSZip from 'jszip'
 import { saveAs } from 'file-saver';
-import { RegionComponent } from '../lib/trello';
 import mergeComponents from '../lib/mergeComponents'
+import getImageFiles from '../lib/getImageFiles'
 
 interface ImageExportButtonProps {
   regions: Region[]
@@ -29,15 +29,8 @@ const ExportButton = ({ regions, imgData, ...props}: ImageExportButtonProps) => 
     setLoading(true)
 
     // generate blobs for region image files
-    const components = await Promise.all(
+    const components = await getImageFiles(
       mergeComponents(regions.map((region: Region) => generateComponentImageUrl(region, imgData)))
-        .map(async (component: RegionComponent) => ({
-          name: component.name,
-          images: await Promise.all(component.attachments.map(async attachment => {
-            return await fetch(attachment.url)
-                .then(res => res.blob())
-          }))
-        }))
     )
     
     // add files to the zip

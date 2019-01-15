@@ -30,7 +30,7 @@ const JiraExportButton = ({ regions, imgData, ...props }: TrelloExportButtonProp
 
   return (
     <>
-      <Button onClick={() => setModalOpen(true)} >Export to Jira <span className="icon">🚀</span></Button>
+      <Button onClick={() => setModalOpen(true)} >Export{modalOpen && 'ing'} to Jira <span className="icon">🚀</span></Button>
       <Modal show={modalOpen}>
         <Warning>ℹ️ The cards will be added to the first list of the board.</Warning>
 

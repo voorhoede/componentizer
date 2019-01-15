@@ -5,6 +5,8 @@ export const handler = async (event, context, callback) => {
   const path = event.path.replace('/jira-proxy/', '')
   const url = `https://api.atlassian.com/ex/jira/${query.cloudId}/rest/api/2/${path}`;
 
+  console.log(query)
+
   console.log('-------')
   console.log('')
   console.log('')

@@ -9,7 +9,6 @@ const JiraExportButton = React.lazy(() => import('./JiraExportButton'))
 const ImageExportButton = React.lazy(() => import('./ImageExportButton'))
 import { CloudinaryImage } from './ImageUploader'
 import DropDown from './DropDown';
-import Button from './styled-components/Button';
 
 const maxRegionSize = 10
 
@@ -122,19 +121,6 @@ const ImageEditor = ({ imgData }: ImageEditorProps) => {
 
     return acc
   }, [])
-
-  regions.push({
-    x: 32.18390804597701,
-    y: 16.147859922178988,
-    width: 25.21072796934866,
-    height: 19.357976653696497,
-    new: false,
-    data: {
-      name: "asdf",
-      index: 0
-    },
-    isChanging: false
-  })
 
   return (
     <>
