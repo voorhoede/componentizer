@@ -23,7 +23,8 @@ async function authorize () {
     callback_method: 'postMessage',
     response_type: 'fragment',
     return_url: window.location.href,
-    prompt: 'consent'
+    prompt: 'consent',
+    expiration: 'never'
   });
 
   const token = await trelloAuthWindow(`.netlify/functions/trello-proxy/authorize?${query}`);
