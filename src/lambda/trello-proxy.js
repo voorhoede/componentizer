@@ -7,7 +7,7 @@ dotenv.config()
 const key = process.env.TRELLO_KEY;
 const baseUrl = 'https://trello.com/1';
 
-export const handler = async (event, context, callback) => {
+export const handler = async (event, context) => {
   const path = event.path
     .replace('.netlify/functions/', '')
     .replace('/trello-proxy', '')
@@ -25,13 +25,13 @@ export const handler = async (event, context, callback) => {
         .replace(/href="/g, 'href="https://trello.com')
         .replace(/\/images/g, 'https://trello.com/images')
     }
-    
-    callback(null, {
+
+    return Promise.resolve({
       statusCode: 200,
       body: res.body
     })
   } catch(err) {
-    callback(null, {
+    return Promise.resolve({
       statusCode: 400,
       body: JSON.stringify(err.statusMessage)
     })
