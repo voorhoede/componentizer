@@ -36,5 +36,4 @@ export const handler = async (event, context, callback) => {
       body: JSON.stringify(err.statusMessage)
     })
   }
-
 }
