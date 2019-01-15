@@ -13,7 +13,8 @@ export async function authenticate () {
       prompt: "consent",
       redirect_uri: window.location.origin,
       callback_method: 'postMessage',
-      response_type: "code",
+      response_type: 'code',
+      oauth_expires_in: '157680000',
       scope: 'read:jira-user read:jira-work write:jira-work manage:jira-project manage:jira-configuration',
       state: new Date(),
     });
