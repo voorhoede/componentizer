@@ -61,7 +61,7 @@ const ComponentForm= ({ onSubmit, region, onCancel, names }: ComponentFormProps)
             <input {...getInputProps({
               id: "name",
               name: 'name',
-              value: state.name,
+              value: state.name || '',
               onChange: onInput,
               ref: nameInputRef
             })}/>
