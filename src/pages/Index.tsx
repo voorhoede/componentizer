@@ -29,7 +29,7 @@ const Index = () => (
   <Page>
     <IndexStyles>
       <OldSchoolTitle>Componentizer</OldSchoolTitle>
-      <Title as="h2">Upload your screenshot 📸</Title>
+      <Title as="h2">Upload your image 📸</Title>
       <ImageUploader/>
       <Credits>
         <p>⚡️ by <a href="https://www.voorhoede.nl">De Voorhoede</a></p>
