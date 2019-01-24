@@ -32,7 +32,7 @@ const Index = () => (
       <Title as="h2">Upload your image 📸</Title>
       <ImageUploader/>
       <Credits>
-        <p>⚡️ by <a href="https://www.voorhoede.nl">De Voorhoede</a></p>
+        <p>⚡️ by <a href="https://github.com/sjoerdbeentjes">@sjoerdbeentjes</a>, <a href="https://www.voorhoede.nl">de Voorhoede</a></p>
         <p>See project on <a href="https://github.com/voorhoede/componentizer">Github</a></p>
       </Credits>
     </IndexStyles>
