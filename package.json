@@ -2,6 +2,18 @@
   "name": "componentizer",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "run-p start:**",
+    "start:app": "react-scripts start",
+    "start:lambda": "netlify-lambda serve src/lambda",
+    "build": "run-p build:**",
+    "build:app": "react-scripts build",
+    "build:lambda": "netlify-lambda build src/lambda",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "proxy": "ngrok http 3000",
+    "analyse": "npm run build:app -- --stats && webpack-bundle-analyzer ./build/bundle-stats.json"
+  },
   "dependencies": {
     "@stylable/webpack-plugin": "^0.1.22",
     "@types/file-saver": "^2.0.0",
@@ -31,7 +43,6 @@
     "polished": "^2.3.1",
     "query-string": "^6.2.0",
     "react": "16.7.0-alpha.2",
-    "react-cache": "^2.0.0-alpha.1",
     "react-dom": "16.7.0-alpha.2",
     "react-error-boundary": "^1.2.3",
     "react-filepond": "^5.0.0",
@@ -43,17 +54,8 @@
     "typescript": "3.2.2",
     "webpack-bundle-analyzer": "^3.0.3"
   },
-  "scripts": {
-    "start": "run-p start:**",
-    "start:app": "react-scripts start",
-    "start:lambda": "netlify-lambda serve src/lambda",
-    "build": "run-p build:**",
-    "build:app": "react-scripts build",
-    "build:lambda": "netlify-lambda build src/lambda",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "proxy": "ngrok http 3000",
-    "analyse": "npm run build:app -- --stats && webpack-bundle-analyzer ./build/bundle-stats.json"
+  "devDependencies": {
+    "webpack-cli": "^3.2.0"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,8 +65,5 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ],
-  "devDependencies": {
-    "webpack-cli": "^3.2.0"
-  }
+  ]
 }
