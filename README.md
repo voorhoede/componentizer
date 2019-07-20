@@ -1,9 +1,5 @@
 # Componentizer
 
-> 🚧  Some experimental React features (like hooks) are used in this project as an experiment. It's likely their API will change in the future.
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Available Scripts
 
 In the project directory, you can run:
