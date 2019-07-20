@@ -13,6 +13,7 @@ export default styled.h1`
 export const OldSchoolTitle = styled.h1`
   padding: 0 1rem;
   font-family: 'Lazer84';
+  font-weight: normal;
   font-size: 9vw;
   margin-bottom: 5rem;
   color: rgba(230,65,247,1);
