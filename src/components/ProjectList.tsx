@@ -69,11 +69,11 @@ const ProjectList = ({ projects, onProjectSelect, loading }: ProjectList) => {
                 await onProjectSelect(project.key || project.id)
                 setLoadingBoard(null)
               }}
-            >{project.name}{loadingId === project.id && <span className="icon">⏳</span>}</Board>
+            >{project.name}{loadingId === project.id && <span className="icon" role="img" aria-label="hourglass">⏳</span>}</Board>
           </li>
         ))
 
-      ): <p>Loading <span>⌛️</span></p>}
+      ): <p>Loading <span role="img" aria-label="hourglass">⌛️</span></p>}
     </StyledBoardList>
   )
 }

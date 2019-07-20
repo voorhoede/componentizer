@@ -1,6 +1,3 @@
-import generateComponentImageUrl from './generateComponentImageUrl'
-import mergeComponents from './mergeComponents'
-
 import { RegionComponent } from '../lib/trello';
 
 function getImageFiles(components: RegionComponent[]) {

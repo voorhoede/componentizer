@@ -1,6 +1,6 @@
 import * as React from 'react';
 import styled, { css } from '../styled-components';
-import posed, { PoseGroup } from 'react-pose';
+import posed from 'react-pose';
 import Button from './styled-components/Button';
 
 interface DropDownProps {

@@ -29,10 +29,10 @@ const Index = () => (
   <Page>
     <IndexStyles>
       <OldSchoolTitle>Componentizer</OldSchoolTitle>
-      <Title as="h2">Upload your image 📸</Title>
+      <Title as="h2">Upload your image <span role="img" aria-label="camera">📸</span></Title>
       <ImageUploader/>
       <Credits>
-        <p>⚡️ by <a href="https://github.com/sjoerdbeentjes">@sjoerdbeentjes</a>, <a href="https://www.voorhoede.nl">De Voorhoede</a></p>
+        <p><span role="img" aria-label="lightning">⚡️</span> by <a href="https://github.com/sjoerdbeentjes">@sjoerdbeentjes</a>, <a href="https://www.voorhoede.nl">De Voorhoede</a></p>
         <p>See project on <a href="https://github.com/voorhoede/componentizer">Github</a></p>
       </Credits>
     </IndexStyles>

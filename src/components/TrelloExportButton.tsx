@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styled from '../styled-components';
 import Button from './styled-components/Button';
 import ModalFooter from './styled-components/ModalFooter';
 import Warning from './styled-components/Warning';
@@ -32,12 +31,14 @@ const TrelloExportButton = ({ regions, imgData, ...props }: TrelloExportButtonPr
   return (
     <>
       <Button onClick={() => setModalOpen(true)} {...props}>
-        Export{modalOpen && 'ing'} to Trello  <span className="icon">🚀</span>
+        Export{modalOpen && 'ing'} to Trello  <span className="icon" role="img" aria-label="thinking face">🚀</span>
       </Button>
       <Modal show={modalOpen}>
-        <Warning>ℹ️ The cards will be added to the first list of the board.</Warning>
+        <Warning>
+          <span role="img" aria-label="information sign">ℹ️</span> The cards will be added to the first list of the board.
+        </Warning>
         
-        <ErrorBoundary FallbackComponent={() => <Error>🤔 Something went wrong fetching the data.</Error>}>
+        <ErrorBoundary FallbackComponent={() => <Error><span role="img" aria-label="thinking face">🤔</span> Something went wrong fetching the data.</Error>}>
           <TrelloProjectList
             onBoardSelect={(id: string) => onBoardSelect(id, regions, imgData, setModalOpen)}
           />

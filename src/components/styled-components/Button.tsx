@@ -1,5 +1,4 @@
 import styled, { css } from '../../styled-components'
-import { lighten } from 'polished'
 
 export default styled.button`
   padding: 1rem;

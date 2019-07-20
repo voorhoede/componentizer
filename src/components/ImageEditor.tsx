@@ -1,13 +1,13 @@
 import * as React from 'react'
-const ReactRegionSelect = require('react-region-select');
 import styled from '../styled-components'
 import Modal from "./Modal";
 import ComponentForm from "./ComponentForm";
 import RegionOptions, { RegionOptionsProps } from './RegionOptions'
-const TrelloExportButton = React.lazy(() => import('./TrelloExportButton'))
-const ImageExportButton = React.lazy(() => import('./ImageExportButton'))
 import { CloudinaryImage } from './ImageUploader'
 import DropDown from './DropDown';
+const ReactRegionSelect = require('react-region-select');
+const TrelloExportButton = React.lazy(() => import('./TrelloExportButton'))
+const ImageExportButton = React.lazy(() => import('./ImageExportButton'))
 
 const maxRegionSize = 10
 

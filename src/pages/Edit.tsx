@@ -23,7 +23,11 @@ const Edit = ({ location, history }: RouteComponentProps) => {
 
   return (
     <StyledEditor>
-      <Link to=""><BackButton><span className="silencio">👈</span><span className="a11y-sr-only">Back to home</span></BackButton></Link>
+      <Link to="">
+        <BackButton>
+          <span role="img" aria-label="hand pointing left">👈</span><span className="a11y-sr-only">Back to home</span>
+        </BackButton>
+      </Link>
       <ImageEditor imgData={location.state.imgData}/>
     </StyledEditor>
   )

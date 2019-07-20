@@ -45,11 +45,11 @@ const RegionOptions = ({ data, isChanging, onEditClick, onDeleteClick }: RegionO
         <Actions key={data.index}>
           <Action onClick={() => onDeleteClick(data.index)}>
             <span className="a11y-sr-only">Delete</span>
-            <span className="silencio">🗑</span>
+            <span role="img" aria-label="trash">🗑</span>
           </Action>
           <Action onClick={() => onEditClick(data.index)}>
             <span className="a11y-sr-only">Edit</span>
-            <span className="silencio">✏️</span>
+            <span role="img" aria-label="pencil">✏️</span>
           </Action>
         </Actions>
       </>

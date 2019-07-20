@@ -96,7 +96,7 @@ const ComponentForm= ({ onSubmit, region, onCancel, names }: ComponentFormProps)
         onKeyPress={e => {
           var code = (e.keyCode ? e.keyCode : e.which);
 
-          if(code == 13 && !e.shiftKey && state.name) {
+          if(code === 13 && !e.shiftKey && state.name) {
             onSubmit({ ...state })
           }
         }}
@@ -109,7 +109,7 @@ const ComponentForm= ({ onSubmit, region, onCancel, names }: ComponentFormProps)
         >Cancel</Button>
         <Button
           disabled={Boolean(!state.name)}
-        >Save <span className="icon">💾</span></Button>
+        >Save <span className="icon" role="img" aria-label="floppy disk">💾</span></Button>
       </ModalFooter>
     </StyledForm>
   )

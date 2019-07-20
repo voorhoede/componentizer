@@ -1,5 +1,4 @@
 import * as React from 'react';
-import styled from '../styled-components';
 import { getBoards } from '../lib/trello';
 import ProjectList from './ProjectList'
 
