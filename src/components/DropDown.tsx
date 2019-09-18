@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled, { css } from '../styled-components';
 import posed from 'react-pose';
+import { motion } from 'framer-motion'
 import Button from './styled-components/Button';
 
 interface DropDownProps {
@@ -13,17 +14,7 @@ const StyledDropDown = styled.div`
   position: relative;
 `
 
-const DropDownList = styled(posed.ul({
-  open: {
-    staggerChildren: 75,
-    delayChildren: 50,
-  },
-  closed: {
-    staggerChildren: 75,
-    delayChildren: 50,
-    staggerDirection: -1
-  }
-}))`
+const DropDownList = styled(motion.ul)`
   list-style: none;
   position: absolute;
   right: 0;
@@ -32,13 +23,13 @@ const DropDownList = styled(posed.ul({
   flex-direction: column;
   align-items: flex-end;
 
-  ${props => props.hide && css`
+  /* ${(props: { hide: boolean }) => props.hide && css`
     display: none;
   `}
 
   li {
     margin-top: 0.5rem;
-  }
+  } */
 `
 
 const transition = {
@@ -46,24 +37,13 @@ const transition = {
   default: { duration: 300 }
 }
 
-const ListItem = posed.li({
-  open: {
-    y: 0,
-    opacity: 1,
-    transition,
-  },
-  closed: {
-    y: -8,
-    opacity: 0,
-    transition,
-  }
-})
+const ListItem = motion.li
 
 const DropDown = ({ triggerText, listItems, disabled }: DropDownProps) => {
   const [open, toggle] = React.useState(false)
   const [show, setShow] = React.useState(false)
 
-  const onAnimationComplete = () => {
+  const handleAnimationComplete = () => {
     if (open) {
       setShow(true)
     } else {
@@ -84,14 +64,42 @@ const DropDown = ({ triggerText, listItems, disabled }: DropDownProps) => {
       </Button>
 
       <DropDownList
-        initialPose="closed"
-        pose={open ? 'open' : 'closed'}
-        onPoseComplete={() => onAnimationComplete()}
+        initial="closed"
+        animate={show ? 'open' : 'closed'}
+        onAnimationComplete={() => handleAnimationComplete()}
         hide={!open && !show}
+        variants={{
+          open: {
+            transition: {
+              delayChildren: 50,
+              staggerChildren: 0.1,
+            },
+          },
+          closed: {
+            transition: {
+              staggerChildren: 75,
+              delayChildren: 50,
+            }
+          }
+        }}
       >
         {
           listItems.map((listItem, index) => (
-            <ListItem key={index}>
+            <ListItem
+              key={index}
+              variants={{
+                open: {
+                  y: 0,
+                  opacity: 1,
+                  transition,
+                },
+                closed: {
+                  y: -8,
+                  opacity: 0,
+                  transition,
+                }
+              }}
+            >
               {listItem}
             </ListItem>
           ))

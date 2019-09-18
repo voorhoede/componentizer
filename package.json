@@ -12,8 +12,7 @@
     "postbuild": "react-snap",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "analyse": "npm run build:app && source-map-explorer 'build/static/js/*.js'",
-    "reactide-server": "webpack-dev-server --config reactide.config.js --mode development --hot"
+    "analyse": "npm run build:app && source-map-explorer 'build/static/js/*.js'"
   },
   "dependencies": {
     "@stylable/webpack-plugin": "2.3.0",
@@ -34,6 +33,7 @@
     "filepond": "4.7.1",
     "filepond-plugin-file-validate-type": "1.2.4",
     "filepond-plugin-image-preview": "4.4.0",
+    "framer-motion": "^1.6.7",
     "got": "9.6.0",
     "http-proxy-middleware": "0.20.0",
     "jszip": "3.2.2",
