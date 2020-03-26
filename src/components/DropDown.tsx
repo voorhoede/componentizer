@@ -1,6 +1,5 @@
 import * as React from 'react';
 import styled, { css } from '../styled-components';
-import posed from 'react-pose';
 import { motion } from 'framer-motion'
 import Button from './styled-components/Button';
 
@@ -25,16 +24,16 @@ const DropDownList = styled(motion.ul)`
 
   /* ${(props: { hide: boolean }) => props.hide && css`
     display: none;
-  `}
+    `} */
 
   li {
     margin-top: 0.5rem;
-  } */
+  }
 `
 
 const transition = {
   y: { type: 'spring', stiffness: 500, damping: 20   },
-  default: { duration: 300 }
+  default: { duration: 0.3 }
 }
 
 const ListItem = motion.li
@@ -71,14 +70,14 @@ const DropDown = ({ triggerText, listItems, disabled }: DropDownProps) => {
         variants={{
           open: {
             transition: {
-              delayChildren: 50,
-              staggerChildren: 0.1,
+              delayChildren: 0.05,
+              staggerChildren: 0.01,
             },
           },
           closed: {
             transition: {
-              staggerChildren: 75,
-              delayChildren: 50,
+              staggerChildren: 0.075,
+              delayChildren: 0.05,
             }
           }
         }}
