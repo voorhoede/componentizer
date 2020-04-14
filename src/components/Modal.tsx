@@ -1,6 +1,6 @@
 import * as React from 'react';
-import posed, { PoseGroup } from 'react-pose';
-import styled from '../styled-components'
+import { motion } from 'framer-motion';
+import styled from '../styled-components';
 import ReactDOM from 'react-dom';
 
 interface ModalProps {
@@ -8,22 +8,7 @@ interface ModalProps {
   children: React.ReactNode
 }
 
-const StyledModal = styled(posed.div({
-  enter: {
-    y: 0,
-    opacity: 1,
-    delay: 50,
-    transition: {
-      y: { type: 'spring', stiffness: 500, damping: 20   },
-      default: { duration: 300 }
-    }
-  },
-  exit: {
-    y: 20,
-    opacity: 0,
-    transition: { duration: 100 }
-  }
-}))`
+const StyledModal = styled(motion.div)`
   position: fixed;
   width: 100%;
   height: 100%;
@@ -50,10 +35,7 @@ const StyledDialog = styled.dialog`
   flex-direction: column;
 `;
 
-const Shade = styled(posed.div({
-  enter: { opacity: 1 },
-  exit: { opacity: 0 }
-}))`
+const Shade = styled(motion.div)`
   position: fixed;
   width: 100%;
   height: 100%;
@@ -64,21 +46,37 @@ const Shade = styled(posed.div({
 `;
 
 const Modal = ({ show, children }: ModalProps) => (
-  ReactDOM.createPortal(
-    <PoseGroup>
-      {
-        show &&  [
-          <Shade style={{ position: 'fixed' }} key="shade"/>,
-          <StyledModal key="modal">
-            <StyledDialog open>
-              {children}
-            </StyledDialog>
-          </StyledModal>
-        ]
-      }    
-    </PoseGroup>,
+  show ? ReactDOM.createPortal(
+    <>
+      <Shade
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        key="shade"
+      />
+      <StyledModal
+        key="modal"
+        initial={{
+          y: 20,
+          opacity: 1
+        }}
+        animate={{
+          y: 0,
+          opacity: 1,
+        }}
+        exit={{
+          y: 20,
+          opacity: 0,
+          transition: { duration: 100 }
+        }}
+      >
+        <StyledDialog open>
+          {children}
+        </StyledDialog>
+      </StyledModal>
+    </>,
     document.body
-  )
+  ) : null
 );
 
 export default Modal
