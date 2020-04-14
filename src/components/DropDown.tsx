@@ -1,6 +1,6 @@
 import * as React from 'react';
-import styled, { css } from '../styled-components';
-import { motion } from 'framer-motion'
+import styled from '../styled-components';
+import { motion, AnimatePresence } from 'framer-motion'
 import Button from './styled-components/Button';
 
 interface DropDownProps {
@@ -22,37 +22,18 @@ const DropDownList = styled(motion.ul)`
   flex-direction: column;
   align-items: flex-end;
 
-  /* ${(props: { hide: boolean }) => props.hide && css`
-    display: none;
-    `} */
 
   li {
     margin-top: 0.5rem;
   }
 `
 
-const transition = {
-  y: { type: 'spring', stiffness: 500, damping: 20   },
-  default: { duration: 0.3 }
-}
-
 const ListItem = motion.li
 
 const DropDown = ({ triggerText, listItems, disabled }: DropDownProps) => {
   const [open, toggle] = React.useState(false)
-  const [show, setShow] = React.useState(false)
-
-  const handleAnimationComplete = () => {
-    if (open) {
-      setShow(true)
-    } else {
-      setShow(false)
-    }
-  }
 
   const onButtonClick = () => {
-    if (!open) setShow(true)
-
     toggle(!open)
   }
 
@@ -61,49 +42,23 @@ const DropDown = ({ triggerText, listItems, disabled }: DropDownProps) => {
       <Button onClick={onButtonClick} disabled={disabled}>
         {triggerText}<span className="icon">{open ? '👆' : '👇'}</span>
       </Button>
-
-      <DropDownList
-        initial="closed"
-        animate={show ? 'open' : 'closed'}
-        onAnimationComplete={() => handleAnimationComplete()}
-        hide={!open && !show}
-        variants={{
-          open: {
-            transition: {
-              delayChildren: 0.05,
-              staggerChildren: 0.01,
-            },
-          },
-          closed: {
-            transition: {
-              staggerChildren: 0.075,
-              delayChildren: 0.05,
-            }
-          }
-        }}
-      >
-        {
-          listItems.map((listItem, index) => (
-            <ListItem
-              key={index}
-              variants={{
-                open: {
-                  y: 0,
-                  opacity: 1,
-                  transition,
-                },
-                closed: {
-                  y: -8,
-                  opacity: 0,
-                  transition,
-                }
-              }}
-            >
-              {listItem}
-            </ListItem>
-          ))
-        }
-      </DropDownList>
+        {open && (
+          <AnimatePresence>
+            <DropDownList>
+              {listItems.map((listItem, index) => (
+                <ListItem
+                  key={index}
+                  initial={{ y: -8, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -8, opacity: 0 }}
+                  transition={{ delay: 0.075 * index }}
+                >
+                  {listItem}
+                </ListItem>
+              ))}
+          </DropDownList>
+        </AnimatePresence>
+      )}
     </StyledDropDown>
   )
 }
