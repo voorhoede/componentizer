@@ -42,23 +42,31 @@ const DropDown = ({ triggerText, listItems, disabled }: DropDownProps) => {
       <Button onClick={onButtonClick} disabled={disabled}>
         {triggerText}<span className="icon">{open ? '👆' : '👇'}</span>
       </Button>
+      <AnimatePresence>
         {open && (
-          <AnimatePresence>
-            <DropDownList>
-              {listItems.map((listItem, index) => (
-                <ListItem
-                  key={index}
-                  initial={{ y: -8, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
-                  exit={{ y: -8, opacity: 0 }}
-                  transition={{ delay: 0.075 * index }}
-                >
-                  {listItem}
-                </ListItem>
-              ))}
+          <DropDownList>
+            {listItems.map((listItem, index) => (
+              <ListItem
+                key={index}
+                initial={{ y: -8, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{
+                  y: -8,
+                  opacity: 0,
+                  transition: {
+                    opacity: {
+                      duration: 0.2
+                    }  
+                  }
+                }}
+                transition={{ delay: 0.075 * index }}
+              >
+                {listItem}
+              </ListItem>
+            ))}
           </DropDownList>
-        </AnimatePresence>
-      )}
+        )}
+      </AnimatePresence>
     </StyledDropDown>
   )
 }
