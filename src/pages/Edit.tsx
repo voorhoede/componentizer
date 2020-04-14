@@ -22,7 +22,6 @@ type LocationState = {
 };
 
 const Edit = ({ location, history }: RouteComponentProps<{}, StaticContext, LocationState>) => {
-  console.log(location)
   if (!location.state || !location.state.imgData) {
     history.push('/');
     return null
