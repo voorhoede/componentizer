@@ -29,7 +29,11 @@ async function authorize () {
 
   const token = await trelloAuthWindow(`.netlify/functions/trello-proxy/authorize?${query}`);
 
-  localStorage.setItem('trello_token', token)
+  console.log(token)
+
+  if (token) {
+    localStorage.setItem('trello_token', token)
+  }
 }
 
 export async function getBoards () {
