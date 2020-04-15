@@ -30,7 +30,7 @@ const StyledDialog = styled.dialog`
   position: static;
   border: none;
   padding: 1.5rem;
-  border-radius: ${props => props.theme.borderRadiusLarge};
+  border-radius: ${(props) => props.theme.borderRadiusLarge};
   display: flex;
   flex-direction: column;
 `
@@ -55,7 +55,7 @@ const Modal = ({ show, children }: ModalProps) =>
             animate={{ opacity: 1 }}
             exit={{
               opacity: 0,
-              transition: { duration: 0.2 }
+              transition: { duration: 0.2 },
             }}
             key="shade"
           />
@@ -63,16 +63,16 @@ const Modal = ({ show, children }: ModalProps) =>
             key="modal"
             initial={{
               y: 20,
-              opacity: 1
+              opacity: 1,
             }}
             animate={{
               y: 0,
-              opacity: 1
+              opacity: 1,
             }}
             exit={{
               y: 20,
               opacity: 0,
-              transition: { duration: 0.2 }
+              transition: { duration: 0.2 },
             }}
           >
             <StyledDialog open>{children}</StyledDialog>

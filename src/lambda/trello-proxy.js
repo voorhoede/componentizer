@@ -4,8 +4,8 @@ import dotenv from 'dotenv'
 
 dotenv.config()
 
-const key = process.env.TRELLO_KEY;
-const baseUrl = 'https://trello.com/1';
+const key = process.env.TRELLO_KEY
+const baseUrl = 'https://trello.com/1'
 
 export const handler = async (event, context) => {
   const path = event.path
@@ -15,10 +15,13 @@ export const handler = async (event, context) => {
   const formattedQuery = queryString.stringify(query)
   const url = `${path}?${formattedQuery}`
 
-  try {    
-    const res = await got({ method: event.httpMethod, url: `${baseUrl}${url}` })
+  try {
+    const res = await got({
+      method: event.httpMethod,
+      url: `${baseUrl}${url}`,
+    })
     const contentType = res.headers['content-type']
-  
+
     if (contentType === 'text/html; charset=utf-8') {
       // for auth screens
       res.body = res.body
@@ -28,12 +31,12 @@ export const handler = async (event, context) => {
 
     return Promise.resolve({
       statusCode: 200,
-      body: res.body
+      body: res.body,
     })
-  } catch(err) {
+  } catch (err) {
     return Promise.resolve({
       statusCode: 400,
-      body: JSON.stringify(err.statusMessage)
+      body: JSON.stringify(err.statusMessage),
     })
   }
 }

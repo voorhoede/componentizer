@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { getBoards } from '../lib/trello';
+import * as React from 'react'
+import { getBoards } from '../lib/trello'
 import ProjectList from './ProjectList'
 
 interface TrelloProjectListProps {
@@ -12,12 +12,11 @@ const TrelloProjectList = ({ onBoardSelect }: TrelloProjectListProps) => {
 
   React.useEffect(() => {
     setLoading(true)
-    
-    getBoards()
-      .then(boards => {
-        setBoards(boards)
-        setLoading(false)
-      })
+
+    getBoards().then((boards) => {
+      setBoards(boards)
+      setLoading(false)
+    })
   }, [])
 
   return (
@@ -27,6 +26,6 @@ const TrelloProjectList = ({ onBoardSelect }: TrelloProjectListProps) => {
       loading={loading}
     />
   )
-};
+}
 
 export default TrelloProjectList

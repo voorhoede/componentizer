@@ -1,5 +1,5 @@
 import * as React from 'react'
-import styled from '../styled-components';
+import styled from '../styled-components'
 import { RegionData } from './ImageEditor'
 
 export interface RegionOptionsProps {
@@ -17,7 +17,7 @@ const StyledRegionOptions = styled.div`
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
-`;
+`
 
 const NameLabel = styled.p`
   padding: 0.25rem;
@@ -37,7 +37,12 @@ const Action = styled.button`
   border: none;
 `
 
-const RegionOptions = ({ data, isChanging, onEditClick, onDeleteClick }: RegionOptionsProps) => (
+const RegionOptions = ({
+  data,
+  isChanging,
+  onEditClick,
+  onDeleteClick,
+}: RegionOptionsProps) => (
   <StyledRegionOptions>
     {!isChanging && data.name && (
       <>
@@ -45,16 +50,20 @@ const RegionOptions = ({ data, isChanging, onEditClick, onDeleteClick }: RegionO
         <Actions key={data.index}>
           <Action onClick={() => onDeleteClick(data.index)}>
             <span className="a11y-sr-only">Delete</span>
-            <span role="img" aria-label="trash">🗑</span>
+            <span role="img" aria-label="trash">
+              🗑
+            </span>
           </Action>
           <Action onClick={() => onEditClick(data.index)}>
             <span className="a11y-sr-only">Edit</span>
-            <span role="img" aria-label="pencil">✏️</span>
+            <span role="img" aria-label="pencil">
+              ✏️
+            </span>
           </Action>
         </Actions>
       </>
     )}
   </StyledRegionOptions>
-);
+)
 
 export default RegionOptions

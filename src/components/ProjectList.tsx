@@ -1,6 +1,6 @@
 import * as React from 'react'
-import styled from '../styled-components';
-import Button from './styled-components/Button';
+import styled from '../styled-components'
+import Button from './styled-components/Button'
 
 type Brightness = 'dark' | 'light'
 
@@ -36,12 +36,13 @@ const StyledBoardList = styled.ul`
   li:not(:last-of-type) {
     margin-bottom: 1rem;
   }
-`;
+`
 
 const Board = styled(Button)<ProjectProps>`
-  background: ${props => props.background};
+  background: ${(props) => props.background};
   font-size: 1rem;
-  color: ${props => props.backgroundBrightness === 'light' ? '#000' : '#fff'};
+  color: ${(props) =>
+    props.backgroundBrightness === 'light' ? '#000' : '#fff'};
 
   .icon {
     margin-left: 0.5rem;
@@ -53,27 +54,42 @@ const Board = styled(Button)<ProjectProps>`
 `
 
 const ProjectList = ({ projects, onProjectSelect, loading }: ProjectList) => {
-  const [loadingId, setLoadingBoard] = React.useState<string | null>(null);
+  const [loadingId, setLoadingBoard] = React.useState<string | null>(null)
 
   return (
     <StyledBoardList>
-      { !loading ? (
+      {!loading ? (
         projects.map((project: Project) => (
           <li key={project.id}>
             <Board
               background={project.prefs && project.prefs.backgroundBottomColor}
-              backgroundBrightness={project.prefs && project.prefs.backgroundBrightness}
+              backgroundBrightness={
+                project.prefs && project.prefs.backgroundBrightness
+              }
               disabled={Boolean(loadingId)}
               onClick={async () => {
                 setLoadingBoard(project.id)
                 await onProjectSelect(project.key || project.id)
                 setLoadingBoard(null)
               }}
-            >{project.name}{loadingId === project.id && <span className="icon" role="img" aria-label="hourglass">⏳</span>}</Board>
+            >
+              {project.name}
+              {loadingId === project.id && (
+                <span className="icon" role="img" aria-label="hourglass">
+                  ⏳
+                </span>
+              )}
+            </Board>
           </li>
         ))
-
-      ): <p>Loading <span role="img" aria-label="hourglass">⌛️</span></p>}
+      ) : (
+        <p>
+          Loading{' '}
+          <span role="img" aria-label="hourglass">
+            ⌛️
+          </span>
+        </p>
+      )}
     </StyledBoardList>
   )
 }

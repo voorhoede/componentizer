@@ -19,7 +19,10 @@ body {
   overflow: auto;
 }
 
-html, body, #root, .App {
+html,
+body,
+#root,
+.App {
   height: 100%;
 }
 
@@ -35,5 +38,5 @@ html, body, #root, .App {
 }
 
 .silencio {
-  speak: none
+  speak: none;
 }

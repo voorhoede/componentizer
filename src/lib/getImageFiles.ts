@@ -1,15 +1,15 @@
-import { RegionComponent } from '../lib/trello';
+import { RegionComponent } from '../lib/trello'
 
 function getImageFiles(components: RegionComponent[]) {
   return Promise.all(
-    components
-      .map(async (component: RegionComponent) => ({
-        name: component.name,
-        images: await Promise.all(component.attachments.map(async attachment => {
-          return await fetch(attachment.url)
-              .then(res => res.blob())
-        }))
-      }))
+    components.map(async (component: RegionComponent) => ({
+      name: component.name,
+      images: await Promise.all(
+        component.attachments.map(async (attachment) => {
+          return await fetch(attachment.url).then((res) => res.blob())
+        })
+      ),
+    }))
   )
 }
 

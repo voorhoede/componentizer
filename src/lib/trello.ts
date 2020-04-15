@@ -12,7 +12,7 @@ export interface RegionComponent {
   attachments: Attachment[]
 }
 
-async function authorize () {
+async function authorize() {
   if (localStorage.getItem('trello_token')) {
     return
   }
@@ -24,31 +24,36 @@ async function authorize () {
     response_type: 'fragment',
     return_url: window.location.href,
     prompt: 'consent',
-    expiration: 'never'
-  });
+    expiration: 'never',
+  })
 
-  const token = await trelloAuthWindow(`.netlify/functions/trello-proxy/authorize?${query}`);
+  const token = await trelloAuthWindow(
+    `.netlify/functions/trello-proxy/authorize?${query}`
+  )
 
   if (token) {
     localStorage.setItem('trello_token', token)
   }
 }
 
-export async function getBoards () {
+export async function getBoards() {
   await authorize()
-  const token = localStorage.getItem('trello_token');
-  const query = queryString.stringify({ token });
-  return fetch(`.netlify/functions/trello-proxy/member/me/boards?${query}`)
-    .then(res => res.json())
+  const token = localStorage.getItem('trello_token')
+  const query = queryString.stringify({ token })
+  return fetch(
+    `.netlify/functions/trello-proxy/member/me/boards?${query}`
+  ).then((res) => res.json())
 }
 
-export async function addCards (boardId: string, cards: RegionComponent[]) {
+export async function addCards(boardId: string, cards: RegionComponent[]) {
   await authorize()
-  const token = localStorage.getItem('trello_token');
+  const token = localStorage.getItem('trello_token')
   const listsQuery = queryString.stringify({ token })
-  const lists = await fetch(`.netlify/functions/trello-proxy/boards/${boardId}/lists?${listsQuery}`).then(res => res.json())
+  const lists = await fetch(
+    `.netlify/functions/trello-proxy/boards/${boardId}/lists?${listsQuery}`
+  ).then((res) => res.json())
 
-  let list: { id?: string } = {};
+  let list: { id?: string } = {}
 
   if (!lists.length) {
     const listQuery = queryString.stringify({
@@ -57,36 +62,46 @@ export async function addCards (boardId: string, cards: RegionComponent[]) {
       name: 'To do',
     })
 
-    list = await fetch(`.netlify/functions/trello-proxy/lists?${listQuery}`, { method: 'POST' }).then(res => res.json())
+    list = await fetch(`.netlify/functions/trello-proxy/lists?${listQuery}`, {
+      method: 'POST',
+    }).then((res) => res.json())
   } else {
     list = lists[0]
   }
 
   // merge cards with the same name
-  const mergedCards = mergeComponents(cards);
+  const mergedCards = mergeComponents(cards)
 
-  return Promise.all(mergedCards.map(async card => {
-    const cardQuery = queryString.stringify({
-      token,
-      idList: list.id,
-      name: card.name,
-      desc: card.description
-    })
-
-    const url = `.netlify/functions/trello-proxy/cards?${cardQuery}`  
-
-    const { id }: { id: string } = await fetch(url, { method: 'POST' }).then(res => res.json())
-
-    return Promise.all(card.attachments.map(attachment => {
-      const attachmentQuery = queryString.stringify({
+  return Promise.all(
+    mergedCards.map(async (card) => {
+      const cardQuery = queryString.stringify({
         token,
-        url: attachment.url,
-        name: card.name
+        idList: list.id,
+        name: card.name,
+        desc: card.description,
       })
 
-      const attachmentUrl = `.netlify/functions/trello-proxy/cards/${id}/attachments?${attachmentQuery}`
+      const url = `.netlify/functions/trello-proxy/cards?${cardQuery}`
 
-      return fetch(attachmentUrl, { method: 'POST' }).then(res => res.json())
-    }))
-  }))
+      const { id }: { id: string } = await fetch(url, {
+        method: 'POST',
+      }).then((res) => res.json())
+
+      return Promise.all(
+        card.attachments.map((attachment) => {
+          const attachmentQuery = queryString.stringify({
+            token,
+            url: attachment.url,
+            name: card.name,
+          })
+
+          const attachmentUrl = `.netlify/functions/trello-proxy/cards/${id}/attachments?${attachmentQuery}`
+
+          return fetch(attachmentUrl, {
+            method: 'POST',
+          }).then((res) => res.json())
+        })
+      )
+    })
+  )
 }

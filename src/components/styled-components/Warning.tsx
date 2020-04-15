@@ -7,4 +7,4 @@ export default styled.p`
   &:last-of-type {
     margin-bottom: 1.5rem;
   }
-`;
+`

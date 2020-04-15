@@ -1,7 +1,7 @@
-import * as React from 'react';
-import styled from '../styled-components';
+import * as React from 'react'
+import styled from '../styled-components'
 import { motion, AnimatePresence } from 'framer-motion'
-import Button from './styled-components/Button';
+import Button from './styled-components/Button'
 
 interface DropDownProps {
   triggerText: string
@@ -22,7 +22,6 @@ const DropDownList = styled(motion.ul)`
   flex-direction: column;
   align-items: flex-end;
 
-
   li {
     margin-top: 0.5rem;
   }
@@ -40,7 +39,8 @@ const DropDown = ({ triggerText, listItems, disabled }: DropDownProps) => {
   return (
     <StyledDropDown>
       <Button onClick={onButtonClick} disabled={disabled}>
-        {triggerText}<span className="icon">{open ? '👆' : '👇'}</span>
+        {triggerText}
+        <span className="icon">{open ? '👆' : '👇'}</span>
       </Button>
       <AnimatePresence>
         {open && (
@@ -55,9 +55,9 @@ const DropDown = ({ triggerText, listItems, disabled }: DropDownProps) => {
                   opacity: 0,
                   transition: {
                     opacity: {
-                      duration: 0.2
-                    }  
-                  }
+                      duration: 0.2,
+                    },
+                  },
                 }}
                 transition={{ delay: 0.075 * index }}
               >
