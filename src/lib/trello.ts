@@ -28,7 +28,7 @@ async function authorize() {
   })
 
   const token = await trelloAuthWindow(
-    `.netlify/functions/trello-proxy/authorize?${query}`
+    `/.netlify/functions/trello-proxy/authorize?${query}`
   )
 
   if (token) {
@@ -41,7 +41,7 @@ export async function getBoards() {
   const token = localStorage.getItem('trello_token')
   const query = queryString.stringify({ token })
   return fetch(
-    `.netlify/functions/trello-proxy/member/me/boards?${query}`
+    `/.netlify/functions/trello-proxy/member/me/boards?${query}`
   ).then((res) => res.json())
 }
 
@@ -50,7 +50,7 @@ export async function addCards(boardId: string, cards: RegionComponent[]) {
   const token = localStorage.getItem('trello_token')
   const listsQuery = queryString.stringify({ token })
   const lists = await fetch(
-    `.netlify/functions/trello-proxy/boards/${boardId}/lists?${listsQuery}`
+    `/.netlify/functions/trello-proxy/boards/${boardId}/lists?${listsQuery}`
   ).then((res) => res.json())
 
   let list: { id?: string } = {}
@@ -62,7 +62,7 @@ export async function addCards(boardId: string, cards: RegionComponent[]) {
       name: 'To do',
     })
 
-    list = await fetch(`.netlify/functions/trello-proxy/lists?${listQuery}`, {
+    list = await fetch(`/.netlify/functions/trello-proxy/lists?${listQuery}`, {
       method: 'POST',
     }).then((res) => res.json())
   } else {
@@ -81,7 +81,7 @@ export async function addCards(boardId: string, cards: RegionComponent[]) {
         desc: card.description,
       })
 
-      const url = `.netlify/functions/trello-proxy/cards?${cardQuery}`
+      const url = `/.netlify/functions/trello-proxy/cards?${cardQuery}`
 
       const { id }: { id: string } = await fetch(url, {
         method: 'POST',
@@ -95,7 +95,7 @@ export async function addCards(boardId: string, cards: RegionComponent[]) {
             name: card.name,
           })
 
-          const attachmentUrl = `.netlify/functions/trello-proxy/cards/${id}/attachments?${attachmentQuery}`
+          const attachmentUrl = `/.netlify/functions/trello-proxy/cards/${id}/attachments?${attachmentQuery}`
 
           return fetch(attachmentUrl, {
             method: 'POST',

@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { RouteComponentProps, withRouter, Link } from 'react-router-dom'
-import { StaticContext } from 'react-router'
+import { useParams } from 'react-router'
 import styled from '../styled-components'
 import ImageEditor from '../components/ImageEditor'
 import Button from '../components/styled-components/Button'
 import { CloudinaryImage } from '../components/ImageUploader'
+import useImageInfo from '../lib/useImageInfo'
 
 const StyledEditor = styled.div`
   height: 100%;
@@ -21,14 +22,9 @@ type LocationState = {
   imgData: CloudinaryImage
 }
 
-const Edit = ({
-  location,
-  history,
-}: RouteComponentProps<{}, StaticContext, LocationState>) => {
-  if (!location.state || !location.state.imgData) {
-    history.push('/')
-    return null
-  }
+const Edit = ({ location, history }: RouteComponentProps<{ id: string }>) => {
+  const params = useParams<{ id: string }>()
+  const imgData = useImageInfo(params.id)
 
   return (
     <StyledEditor>
@@ -40,7 +36,7 @@ const Edit = ({
           <span className="a11y-sr-only">Back to home</span>
         </BackButton>
       </Link>
-      <ImageEditor imgData={location.state.imgData} />
+      {imgData && <ImageEditor imgData={imgData} />}
     </StyledEditor>
   )
 }
