@@ -34,7 +34,7 @@ const PlaceHolder = styled.div`
 
 const ImageUploader = ({ history }: RouteComponentProps) => {
   function onSuccess(imgData: CloudinaryImage) {
-    history.push('/edit', { imgData })
+    history.push(`/edit/${imgData.public_id.split('/')[1]}`, { imgData })
   }
 
   return (

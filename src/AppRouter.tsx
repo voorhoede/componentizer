@@ -9,7 +9,7 @@ const AppRouter = () => (
     <Router>
       <>
         <Route path="/" exact component={() => <Index />} />
-        <Route path="/edit/" component={() => <Edit />} />
+        <Route path="/edit/:id" component={() => <Edit />} />
       </>
     </Router>
   </React.Suspense>
