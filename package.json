@@ -57,6 +57,7 @@
     "source-map-explorer": "2.4.2",
     "styled-components": "5.1.0",
     "typescript": "3.8.3",
+    "uid": "^1.0.0",
     "webpack-bundle-analyzer": "3.7.0"
   },
   "devDependencies": {
@@ -81,7 +82,12 @@
   "eslintConfig": {
     "extends": "react-app"
   },
-  "browserslist": [">0.2%", "not dead", "not ie <= 11", "not op_mini all"],
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
   "prettier": {
     "trailingComma": "es5",
     "tabWidth": 2,

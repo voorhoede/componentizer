@@ -27,6 +27,7 @@ const NameLabel = styled.p`
 const Actions = styled.div`
   display: flex;
   flex-wrap: nowrap;
+  margin-left: auto;
 `
 
 const Action = styled.button`
@@ -44,9 +45,9 @@ const RegionOptions = ({
   onDeleteClick,
 }: RegionOptionsProps) => (
   <StyledRegionOptions>
-    {!isChanging && data.name && (
+    {!isChanging && (
       <>
-        <NameLabel>{data.name}</NameLabel>
+        {data.name && <NameLabel>{data.name}</NameLabel>}
         <Actions key={data.index}>
           <Action onClick={() => onDeleteClick(data.index)}>
             <span className="a11y-sr-only">Delete</span>
