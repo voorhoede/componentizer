@@ -5,6 +5,7 @@ import { ThemeProvider, createGlobalStyle, css } from './styled-components'
 const theme = {
   lightTextColor: '#747d8c',
   themeColor: '#5f27cd',
+  accentColor: '#e641f7',
   neutralColor: '#f1f2f6',
   errorColor: '#c23616',
   borderRadiusDefault: '0.5rem',
