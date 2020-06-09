@@ -1,5 +1,6 @@
 import * as React from 'react'
 import styled from '../styled-components'
+import GridRider from '../components/GridRider'
 import Page from '../components/styled-components/Page'
 import Title, { OldSchoolTitle } from '../components/styled-components/Title'
 import ImageUploader from '../components/ImageUploader'
@@ -49,6 +50,7 @@ const Index = () => (
           <a href="https://github.com/voorhoede/componentizer">Github</a>
         </p>
       </Credits>
+      <GridRider />
     </IndexStyles>
   </Page>
 )
